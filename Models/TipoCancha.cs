@@ -5,13 +5,10 @@ using System.Threading.Tasks;
 
 namespace ClubAtleticoOrt.Models
 {
-    public class TipoCancha
+    public enum TipoCancha
     {
-        public int Id { get; set; }
-        public string Cemento { get; set; }
-
-        public string Polvo_Ladrrilo { get; set; }
-
-        public string Cesped_Sintetico { get; set; }
+       CEMENTO,
+       POLVO_LADRILLO,
+       CESPED_SINTETICO
     }
 }

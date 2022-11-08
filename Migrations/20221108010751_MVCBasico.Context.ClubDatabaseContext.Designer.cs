@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClubAtleticoOrt.Migrations
 {
     [DbContext(typeof(ClubDatabaseContext))]
-    [Migration("20221108000458_MVCBasico.Context.ClubDatabaseContext")]
+    [Migration("20221108010751_MVCBasico.Context.ClubDatabaseContext")]
     partial class MVCBasicoContextClubDatabaseContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,32 +31,12 @@ namespace ClubAtleticoOrt.Migrations
                     b.Property<int>("Estado")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TipoId")
+                    b.Property<int>("Tipo")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TipoId");
 
                     b.ToTable("Canchas");
-                });
-
-            modelBuilder.Entity("ClubAtleticoOrt.Models.Estado", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Libre")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Reservado")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Estados");
                 });
 
             modelBuilder.Entity("ClubAtleticoOrt.Models.Reserva", b =>
@@ -78,27 +58,6 @@ namespace ClubAtleticoOrt.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Reservas");
-                });
-
-            modelBuilder.Entity("ClubAtleticoOrt.Models.TipoCancha", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Cemento")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Cesped_Sintetico")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Polvo_Ladrrilo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TipoCancha");
                 });
 
             modelBuilder.Entity("ClubAtleticoOrt.Models.Usuario", b =>
@@ -132,13 +91,6 @@ namespace ClubAtleticoOrt.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Usuarios");
-                });
-
-            modelBuilder.Entity("ClubAtleticoOrt.Models.Cancha", b =>
-                {
-                    b.HasOne("ClubAtleticoOrt.Models.TipoCancha", "Tipo")
-                        .WithMany()
-                        .HasForeignKey("TipoId");
                 });
 #pragma warning restore 612, 618
         }
