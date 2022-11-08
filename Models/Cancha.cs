@@ -10,7 +10,7 @@ namespace ClubAtleticoOrt.Models
     {
         public int Id { get; set; }
 
-        [EnumDataType(typeof(EnumDeporte))] public EnumDeporte Tipo { get; set; }
+        [EnumDataType(typeof(TipoCancha))] public TipoCancha Tipo { get; set; }
 
         public int Estado { get; set; }
 

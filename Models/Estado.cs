@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 
 namespace ClubAtleticoOrt.Models
 {
-    public enum EnumDeporte
+    public class Estado
     {
-        CEMENTO,
-        CESPED_SINTETICO,
-        POLVO_LADRILLO
+
+        public int Id { get; set; }
+        public int Reservado { get; set; }
+
+        public int Libre { get; set; }
     }
 }
