@@ -7,6 +7,7 @@ namespace ClubAtleticoOrt.Models
 {
     public enum Estado
     {
+
         RESERVADO,
         LIBRE
     }

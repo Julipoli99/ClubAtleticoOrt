@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ClubAtleticoOrt.Migrations
 {
-    public partial class MVCBasicoContextClubDatabaseContext : Migration
+    public partial class CLubAtleticoOrtContextClubDatabaseContext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
