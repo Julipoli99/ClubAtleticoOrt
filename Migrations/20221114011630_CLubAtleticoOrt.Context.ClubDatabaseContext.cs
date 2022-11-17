@@ -29,7 +29,8 @@ namespace ClubAtleticoOrt.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Fecha = table.Column<DateTime>(nullable: false),
                     HoraInicio = table.Column<int>(nullable: false),
-                    HoraFin = table.Column<int>(nullable: false)
+                    HoraFin = table.Column<int>(nullable: false),
+                    id_cancha = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

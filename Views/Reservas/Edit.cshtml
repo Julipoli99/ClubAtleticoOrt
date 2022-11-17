@@ -1,0 +1,100 @@
+﻿@model ClubAtleticoOrt.Models.Reserva
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Reserva</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" id="form">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Fecha" class="control-label"></label>
+                <input asp-for="Fecha" class="form-control" id="fecha" onclick="valorFecha()"/>
+                <span asp-validation-for="Fecha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HoraInicio" class="control-label"></label>
+                <input asp-for="HoraInicio" class="form-control" id="horaInicio"/>
+                <span asp-validation-for="HoraInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HoraFin" class="control-label"></label>
+                <input asp-for="HoraFin" class="form-control" id="horaFin"/>
+                <span asp-validation-for="HoraFin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="id_cancha" class="control-label">Cancha</label>
+                <select asp-for="id_cancha" class="form-control" id="select" onchange="opcionSeleccionada()">
+                    <option value="">Selecciona un tipo de cancha</option>
+                    <option value="0" class="option">
+                        CEMENTO
+                    </option>
+                    <option value="1" class="option">
+                        POLVO DE LADRILLO
+                    </option>
+                    <option value="2" class="option">
+                        CESPED SINTETICO
+                    </option>
+                </select>
+                <span asp-validation-for="id_cancha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<script>
+    let form = document.getElementById("form");
+
+   // let options = document.querySelectorAll(".option");
+
+    let fecha = document.getElementById("fecha");
+
+    let select = document.getElementById("select");
+
+    let horaInicio = document.getElementById("horaInicio");
+
+    let horaFin = document.getElementById("horaFin");
+
+    console.log(select)
+
+    function opcionSeleccionada() {
+        let opcion = select.value
+
+        return opcion
+    }
+
+    function valorFecha() {
+        fecha.addEventListener("change", (e) => {
+
+            let hora = e.target.value.split("T");
+            let horaFinal = hora[1].split(":")
+
+            horaInicio.value = horaFinal[0]
+            horaFin.value = Number(horaFinal[0]) + 1
+
+//            console.log(horaFinal[0])
+
+          //  console.log(typeof horaFinal[0])
+
+          //  console.log(Number(horaFinal[0]) + 1)
+        })
+    }
+
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
