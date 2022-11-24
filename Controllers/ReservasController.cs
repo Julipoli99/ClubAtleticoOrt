@@ -58,11 +58,19 @@ namespace ClubAtleticoOrt.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Fecha,HoraInicio,HoraFin,id_cancha")] Reserva reserva)
         {
+            
+
             if (ModelState.IsValid)
             {
                 try
                 {
-                  //  var canchaEstado = await _context.Canchas.FirstOrDefaultAsync(s => s.Id == id_cancha)
+                      Cancha cancha = await _context.Canchas.FirstOrDefaultAsync(s => s.Tipo == reserva.id_cancha);
+                    {
+                        cancha.Estado = 0;
+                    }
+
+                    _context.Canchas.Update(cancha);
+                    await _context.SaveChangesAsync();
 
                 _context.Add(reserva);
                     await _context.SaveChangesAsync();
@@ -154,6 +162,14 @@ namespace ClubAtleticoOrt.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var reserva = await _context.Reservas.FindAsync(id);
+            Cancha cancha = await _context.Canchas.FirstOrDefaultAsync(s => s.Tipo == reserva.id_cancha);
+            {
+                cancha.Estado = 1;
+            }
+
+            _context.Canchas.Update(cancha);
+            await _context.SaveChangesAsync();
+
             _context.Reservas.Remove(reserva);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

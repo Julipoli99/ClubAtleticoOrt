@@ -72,6 +72,8 @@
     function opcionSeleccionada() {
         let opcion = select.value
 
+        console.log(opcion)
+
         return opcion
     }
 
@@ -79,7 +81,13 @@
         fecha.addEventListener("change", (e) => {
                                                                 
             let hora = e.target.value.split("T");
+
+            console.log(hora)
+
             let horaFinal = hora[1].split(":")
+
+            // 20:30   [20, 30]
+            console.log(horaFinal)
 
             horaInicio.value = horaFinal[0]     //HORA DE INICIO
             horaFin.value = Number(horaFinal[0]) + 1        //HORA DE FIN
