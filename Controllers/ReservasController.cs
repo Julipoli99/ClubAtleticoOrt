@@ -65,16 +65,22 @@ namespace ClubAtleticoOrt.Controllers
                 try
                 {
                       Cancha cancha = await _context.Canchas.FirstOrDefaultAsync(s => s.Tipo == reserva.id_cancha);
+                    if(cancha.Estado == 1)
                     {
                         cancha.Estado = 0;
+                        _context.Canchas.Update(cancha);
+                        await _context.SaveChangesAsync();
+
+                        _context.Add(reserva);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        ViewData["Error"] = "El tipo de cancha solicitado ya se encuentra reservado, elige otra";
+                        return View();
                     }
 
-                    _context.Canchas.Update(cancha);
-                    await _context.SaveChangesAsync();
-
-                _context.Add(reserva);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateException)
                 {
@@ -115,12 +121,76 @@ namespace ClubAtleticoOrt.Controllers
                 return NotFound();
             }
 
+            //Reserva actual = await _context.Reservas.FindAsync(id);
+
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(reserva);
-                    await _context.SaveChangesAsync();
+                    /*  Cancha canchaAnterior = await _context.Canchas.FirstOrDefaultAsync(s => s.Tipo == reserva.id_cancha);
+
+                      Cancha canchaTipo;
+
+                      if (canchaAnterior.Id == 0)
+                      {
+                          canchaTipo = canchaAnterior;
+                      }
+                      else if(canchaAnterior.Id == 1)
+                      {
+                          canchaTipo = canchaAnterior;
+                      }
+                      else
+                      {
+                          canchaTipo = await _context.Canchas.FirstOrDefaultAsync(s => s.Tipo == TipoCancha.CESPED_SINTETICO);
+                      }*/
+
+                    // Cancha canchaAnterior = await _context.Canchas.FirstOrDefaultAsync(s => s.Tipo == reserva.id_cancha - 1);
+
+                    // Cancha canchaAnterior = await _context.Canchas.FirstOrDefaultAsync(s => s.Tipo == reserva.id_cancha);
+
+
+
+                    // Cancha canchaAnterior2 = await _context.Reservas.FindAsync(id_cancha);
+
+                    Cancha canchaActualizada = await _context.Canchas.FirstOrDefaultAsync(s => s.Tipo == reserva.id_cancha);
+
+                    //Cancha actualizada3 = await _context.Canchas.FirstOrDefaultAsync(s => s.Tipo == actual.id_cancha);
+
+                    // Console.WriteLine(actualizada3);
+
+                  //  Reserva r = new Reserva();
+
+                    //r = await _context.Reservas.FindAsync(id);
+
+                    //Cancha actualizada4 = await _context.Canchas.FirstOrDefaultAsync(s => s.Tipo == r.id_cancha);
+
+
+                    if (canchaActualizada.Estado == 1)
+                    {
+
+                        _context.Update(reserva);
+                        await _context.SaveChangesAsync();
+
+                         /*  actualizada4.Estado = 1;                    //NO ESTARIA LEYENDO ESTA PARTE...
+                           _context.Canchas.Update(actualizada4);      //
+                           await _context.SaveChangesAsync();          //*/
+
+                        canchaActualizada.Estado = 0;
+                        _context.Canchas.Update(canchaActualizada);
+                        await _context.SaveChangesAsync();
+                        
+
+                        
+
+                        
+                    }
+                    else
+                    {
+                        ViewData["Error"] = "El tipo de cancha ya se encuentra reservada, elige otra";
+                        return View();
+                    }
+
+                    
                 }
                 catch (DbUpdateConcurrencyException)
                 {
