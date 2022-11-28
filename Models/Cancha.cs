@@ -8,12 +8,14 @@ namespace ClubAtleticoOrt.Models
 {
     public class Cancha
     {
+        [Key]
         public int Id { get; set; }
 
         [EnumDataType(typeof(TipoCancha))] 
         public TipoCancha Tipo { get; set; }
 
-        public int Estado { get; set; }
+        [EnumDataType(typeof(Estado))]
+        public Estado Estado { get; set; }
 
 
     }
