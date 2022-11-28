@@ -25,6 +25,14 @@ namespace ClubAtleticoOrt.Controllers
             return View(await _context.Usuarios.ToListAsync());
         }
 
+
+        // GET: Usuario/login
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
         // GET: Usuario/Details/5
         public async Task<IActionResult> Details(int? id)
         {
