@@ -90,12 +90,13 @@ namespace ClubAtleticoOrt.Controllers
                 return NotFound();
             }
 
-            var reserva = await _context.Reservas.FindAsync(id);
+            Reserva reserva = await _context.Reservas.FindAsync(id);
             
             if (reserva == null)
             {
                 return NotFound();
             }
+            
             return View(reserva);
         }
 
