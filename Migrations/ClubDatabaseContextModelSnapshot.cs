@@ -53,6 +53,9 @@ namespace ClubAtleticoOrt.Migrations
                     b.Property<int>("HoraInicio")
                         .HasColumnType("int");
 
+                    b.Property<int>("id_cancha")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Reservas");

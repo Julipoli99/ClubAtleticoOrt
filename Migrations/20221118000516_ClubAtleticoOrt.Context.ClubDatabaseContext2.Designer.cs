@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClubAtleticoOrt.Migrations
 {
     [DbContext(typeof(ClubDatabaseContext))]
-    [Migration("20221101020523_ClubAtleticoOrt.Context.ClubDatabaseContext")]
-    partial class ClubAtleticoOrtContextClubDatabaseContext
+    [Migration("20221118000516_ClubAtleticoOrt.Context.ClubDatabaseContext2")]
+    partial class ClubAtleticoOrtContextClubDatabaseContext2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.3")
+                .HasAnnotation("ProductVersion", "3.1.30")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -37,6 +37,30 @@ namespace ClubAtleticoOrt.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Canchas");
+                });
+
+            modelBuilder.Entity("ClubAtleticoOrt.Models.Reserva", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("HoraFin")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HoraInicio")
+                        .HasColumnType("int");
+
+                    b.Property<int>("id_cancha")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Reservas");
                 });
 
             modelBuilder.Entity("ClubAtleticoOrt.Models.Usuario", b =>
