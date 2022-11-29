@@ -11,12 +11,13 @@ namespace ClubAtleticoOrt.Models
         [Key]
         public int Id { get; set; }
 
-        [EnumDataType(typeof(TipoCancha))] 
-        public TipoCancha Tipo { get; set; }
+      //  [EnumDataType(typeof(TipoCancha))] 
+       // public TipoCancha Tipo { get; set; }
 
-        [EnumDataType(typeof(Estado))]
-        public Estado Estado { get; set; }
+        /* [EnumDataType(typeof(Estado))]
+         public Estado Estado { get; set; }*/
 
+        public string Descripcion { get; set; }
 
     }
 }

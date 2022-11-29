@@ -56,23 +56,62 @@ namespace ClubAtleticoOrt.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Fecha,HoraInicio,HoraFin,id_cancha")] Reserva reserva)
         {
+
+            var reservas = await _context.Reservas.ToListAsync();
+
+            int i = 0;
+
+            Boolean hayError = false;
+
+
+            while(i < reservas.Count && !hayError)
+            {
+               if (reserva.Fecha == reservas[i].Fecha && reserva.id_cancha == reservas[i].id_cancha 
+                    && reserva.HoraInicio == reservas[i].HoraInicio)
+                  {
+                      hayError = true;
+                      ViewData["Error"] = "La cancha y la fecha estan ocupadas.";
+                      return View();
+                  }
+                else
+                {
+                    i++;
+                }
+            }
+
             
+
 
             if (ModelState.IsValid)
             {
                 try
                 {
                       Cancha cancha = await _context.Canchas.FirstOrDefaultAsync(s => s.Id == reserva.id_cancha);
-                    if(cancha.Estado == Estado.LIBRE)
-                    {
-                        cancha.Estado = Estado.RESERVADO;
-                        _context.Canchas.Update(cancha);
-                        await _context.SaveChangesAsync();
 
+                     if (!validarFecha(reserva.Fecha))
+                    {
+                        ViewData["Error"] = "La fecha no es valida";
+                        return View();
+                    }
+
+                    /* else if (cancha.Estado == Estado.LIBRE)
+                     {
+                         cancha.Estado = Estado.RESERVADO;
+                         _context.Canchas.Update(cancha);
+                         await _context.SaveChangesAsync();
+
+                         _context.Add(reserva);
+                         await _context.SaveChangesAsync();
+                         return RedirectToAction(nameof(Index));
+                     }*/
+
+                    if (!hayError)
+                    {
                         _context.Add(reserva);
                         await _context.SaveChangesAsync();
                         return RedirectToAction(nameof(Index));
                     }
+
                     else
                     {
                         ViewData["Error"] = "El tipo de cancha solicitado ya se encuentra reservado, elige otra";
@@ -112,49 +151,48 @@ namespace ClubAtleticoOrt.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Fecha,HoraInicio,HoraFin,id_cancha")] Reserva reserva)
+        public async Task<IActionResult> Edit(int id, /*int id_cancha,*/ [Bind("Id,Fecha,HoraInicio,HoraFin,id_cancha")] Reserva reserva)
         {
+
             if (id != reserva.Id)
             {
                 return NotFound();
             }
+
 
             if (ModelState.IsValid)
             {
                 try
                 {
 
-                    Cancha canchaActualizada = await _context.Canchas.FirstOrDefaultAsync(s => s.Id == reserva.id_cancha);
+                   // Cancha canchaActualizada = await _context.Canchas.FirstOrDefaultAsync(cancha => cancha.Id == reserva.id_cancha);
 
-                    Reserva actual = await _context.Reservas.FindAsync(id);
+                   // Reserva actual = await _context.Reservas.FindAsync(id);
 
-                    Cancha anterior = await _context.Canchas.FirstOrDefaultAsync(s => s.Id == actual.id_cancha);
+                   // Cancha anterior = await _context.Canchas.FirstOrDefaultAsync(s => s.Id == actual.id_cancha);
 
-                    Boolean hecho = false;
 
-                    if (canchaActualizada.Estado == Estado.LIBRE)
+
+                    if (!validarFecha(reserva.Fecha))
+                    {
+                        ViewData["Error"] = "La fecha no es valida";
+                        return View();
+                    }
+
+                    else if (canchaActualizada.Estado == Estado.LIBRE)
                     {
 
                         {
-
-                            canchaActualizada.Estado = Estado.RESERVADO;
-                            _context.Canchas.Update(canchaActualizada);
-                            await _context.SaveChangesAsync();
-
 
                             anterior.Estado = Estado.LIBRE;
                             _context.Canchas.Update(anterior);
                             await _context.SaveChangesAsync();
 
-                            hecho = true;
-                        }
-
-                        if (hecho)
-                        {
-                            _context.Update(reserva);
+                            canchaActualizada.Estado = Estado.RESERVADO;
+                            _context.Canchas.Update(canchaActualizada);
                             await _context.SaveChangesAsync();
+
                         }
-                       
 
                     }
                     else
@@ -205,13 +243,6 @@ namespace ClubAtleticoOrt.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var reserva = await _context.Reservas.FindAsync(id);
-            Cancha cancha = await _context.Canchas.FirstOrDefaultAsync(s => s.Id == reserva.id_cancha);
-            {
-                cancha.Estado = Estado.LIBRE;
-            }
-
-            _context.Canchas.Update(cancha);
-            await _context.SaveChangesAsync();
 
             _context.Reservas.Remove(reserva);
             await _context.SaveChangesAsync();
@@ -221,6 +252,14 @@ namespace ClubAtleticoOrt.Controllers
         private bool ReservaExists(int id)
         {
             return _context.Reservas.Any(e => e.Id == id);
+        }
+
+
+        private bool validarFecha(DateTime fecha)
+        {
+            var fechaActual = DateTime.Now;
+
+            return fecha > fechaActual;
         }
     }
 }
