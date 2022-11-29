@@ -67,9 +67,9 @@ namespace ClubAtleticoOrt.Controllers
                     }
                     else if (!this.existeReserva(Reserva))
                     {
-                            _context.Add(reserva);
-                            await _context.SaveChangesAsync();
-                            return RedirectToAction(nameof(Index));
+                         _context.Add(reserva);
+                         await _context.SaveChangesAsync();
+                         return RedirectToAction(nameof(Index));
                     }
                 }
                 catch (DbUpdateException)
@@ -133,6 +133,7 @@ namespace ClubAtleticoOrt.Controllers
                     else if(!this.existeReserva(Reserva))
                     {
                         _context.Remove(await _context.Reservas.FindAsync(id)) //HIDALGO: Con esto quiero eliminar de la DB la reserva original, antes de añadir la nueva
+                        this.DeleteConfirmed(id) //Otra forma de eliminar la reserva original usando el metodo del POST Delete
                         _context.Add(reserva);
                         await _context.SaveChangesAsync();
                         return RedirectToAction(nameof(Index));
