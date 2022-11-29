@@ -91,6 +91,7 @@ namespace ClubAtleticoOrt.Controllers
             }
 
             var reserva = await _context.Reservas.FindAsync(id);
+            
             if (reserva == null)
             {
                 return NotFound();
@@ -103,28 +104,17 @@ namespace ClubAtleticoOrt.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, /*int id_cancha,*/ [Bind("Id,Fecha,HoraInicio,HoraFin,id_cancha")] Reserva reserva)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Fecha,HoraInicio,HoraFin,id_cancha")] Reserva reserva)
         {
-
             if (id != reserva.Id)
             {
                 return NotFound();
             }
 
-
             if (ModelState.IsValid)
             {
                 try
                 {
-
-                   // Cancha canchaActualizada = await _context.Canchas.FirstOrDefaultAsync(cancha => cancha.Id == reserva.id_cancha);
-
-                   // Reserva actual = await _context.Reservas.FindAsync(id);
-
-                   // Cancha anterior = await _context.Canchas.FirstOrDefaultAsync(s => s.Id == actual.id_cancha);
-
-
-
                     if (!validarFecha(reserva.Fecha))
                     {
                         ViewData["Error"] = "La fecha no es valida";
@@ -132,8 +122,9 @@ namespace ClubAtleticoOrt.Controllers
                     }
                     else if(!this.existeReserva(Reserva))
                     {
-                        _context.Remove(await _context.Reservas.FindAsync(id)) //HIDALGO: Con esto quiero eliminar de la DB la reserva original, antes de añadir la nueva
-                        this.DeleteConfirmed(id) //Otra forma de eliminar la reserva original usando el metodo del POST Delete
+                        //Eliminar de la DB la reserva original, antes de añadir la nueva
+                        this.DeleteConfirmed(id) 
+                        
                         _context.Add(reserva);
                         await _context.SaveChangesAsync();
                         return RedirectToAction(nameof(Index));
@@ -185,6 +176,8 @@ namespace ClubAtleticoOrt.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //MÉTODOS AUXILIARES
+
         private bool ReservaExists(int id)
         {
             return _context.Reservas.Any(e => e.Id == id);
@@ -198,7 +191,6 @@ namespace ClubAtleticoOrt.Controllers
             return fecha > fechaActual;
         }
 
-        //Método Creado por Hidalgo
         private bool existeReserva(Reserva reserva)
         {
             int i = 0;
@@ -219,6 +211,7 @@ namespace ClubAtleticoOrt.Controllers
                     i++;
                 }
             }
+            return hayError;
         }
     }
 }
