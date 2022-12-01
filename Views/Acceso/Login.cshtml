@@ -1,7 +1,33 @@
 ﻿@{
     ViewData["Title"] = "Login";
 }
+<link href="~/css/StyleSheet.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
-<h2>Index</h2>
+<div class="imagen"></div>
+    <form class="formulario">
 
-<p>Hello from our View Template!</p>
+        <h1>Ingresa</h1>
+
+        <div class="contenedor">
+
+            <p id="errorEmailP" style="color: crimson;"></p>
+            <div class="contenedor-input">
+                <i class="fas fa-envelope icon"></i>
+                <input type="text" name="" id="email" placeholder="Introduce tu email"><span id="iconoX"></span>
+            </div>
+
+            <p id="errorPassP" style="color: crimson;"></p>
+            <div class="contenedor-input">
+                <i class="fas fa-key icon"></i>
+                <input type="password" name="" id="password" placeholder="Introduce tu contraseña"><span id="iconoX2"></span>
+            </div>
+
+            <input type="submit" name="" id="boton" value="Ingresa" class="button">
+
+            <p>¿No tienes una cuenta? <a href="Registro" class="link">Registrate</a></p>
+
+        </div>
+    </form>
+
+<script src="../js/login.js"></script>

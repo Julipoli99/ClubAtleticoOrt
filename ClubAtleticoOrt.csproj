@@ -23,9 +23,12 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Views\Styles\" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\css\formulario.css" />
+    <None Include="wwwroot\futbol-cancha.png" />
     <None Include="wwwroot\js\JavaScript.js" />
   </ItemGroup>
 

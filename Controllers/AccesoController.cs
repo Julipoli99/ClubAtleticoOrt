@@ -12,5 +12,11 @@ namespace ClubAtleticoOrt.Controllers
         {
             return View();
         }
+
+
+        public ActionResult Registro()
+        {
+            return View();
+        }
     }
 }

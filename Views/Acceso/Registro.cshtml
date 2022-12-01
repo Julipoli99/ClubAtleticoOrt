@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<link href="~/css/StyleSheet.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+
+<form class="formulario">
+
+    <h1>Registrate</h1>
+
+    <div class="contenedorRegistro">
+
+        <p id="errorNombreP" style="color: crimson;"></p>
+
+        <div class="contenedor-input">
+            <i class="fas fa-user icon"></i>
+            <input type="text" name="" id="nombre" placeholder="Introduce tu nombre"><span id="iconoX"></span>
+        </div>
+
+
+        <p id="errorEmailP" style="color: crimson;"></p>
+        <div class="contenedor-input">
+            <i class="fas fa-envelope icon"></i>
+            <input type="text" name="" id="email" placeholder="Introduce tu email"><span id="iconoX2"></span>
+        </div>
+
+
+
+
+        <p id="errorPassP" style="color: crimson;"></p>
+        <div class="contenedor-input">
+            <i class="fas fa-key icon"></i>
+            <input type="password" name="" id="password" placeholder="Introduce una contraseña"><span id="iconoX3"></span>
+        </div>
+
+        <p id="errorDniP" style="color: crimson;"></p>
+        <div class="contenedor-input">
+            <i class="fas fa-id-card icon"></i>
+            <input type="text" name="" id="dni" placeholder="Introduce tu dni"><span id="iconoX3"></span>
+        </div>
+
+        <p id="errorTelP" style="color: crimson;"></p>
+        <div class="contenedor-input">
+            <i class="fas fa-phone icon"></i>
+            <input type="tel" name="" class="telefono" placeholder="Introduce un numero telefonico"><span id="iconoX3"></span>
+        </div>
+
+
+        <input type="submit" name="" id="boton" value="Registrate" class="button">
+
+        <p>Al registrarte, aceptas nuestras Condiciones de uso y Política de privacidad.</p>
+
+        <p>¿Ya tienes una cuenta? <a class="link" href="Login">Iniciar Sesión</a></p>
+
+
+    </div>
+
+</form>
+
+
+<script src="../js/registro.js"></script>

@@ -205,7 +205,7 @@ namespace ClubAtleticoOrt.Controllers
         private bool existeReserva(Reserva reserva)  {
             bool encontrado = false;
             var reservasPorCancha = (from d in _context.Reservas
-                                     where d.Fecha == reserva.Fecha 
+                                     where d.Fecha.DayOfYear == reserva.Fecha.DayOfYear 
                                         && d.HoraInicio == reserva.HoraInicio
                                         && d.id_cancha == reserva.id_cancha
                                      select d.HoraInicio).ToList();
@@ -215,5 +215,6 @@ namespace ClubAtleticoOrt.Controllers
             }
             return encontrado;
         }
+
     }
 }
