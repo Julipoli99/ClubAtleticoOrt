@@ -60,20 +60,14 @@ namespace ClubAtleticoOrt.Controllers
             {
                 try
                 {
-                    /*if (!validarFecha(reserva.Fecha))
+                    if (!this.validarFecha(reserva.Fecha))
                     {
                         ViewData["Error"] = "La fecha no es valida";
                         return View();
                     }
-                    else if (!this.existeReserva(Reserva))
+                    else if (this.existeReserva(reserva))
                     {
-                         _context.Add(reserva);
-                         await _context.SaveChangesAsync();
-                         return RedirectToAction(nameof(Index));
-                    }*/
-                    if (ExisteReserva(reserva))
-                    {
-                        ViewData["Error"] = "No es posible reserva esta cancha en el horario elegido. Por favor, intente elegir otra cancha o elija un horario diferente";
+                        ViewData["Error"] = "Ups... Ya está reservado. Por favor, intente elegir otra cancha o elija un horario diferente";
                         return View();
                     }
                     else 
@@ -127,16 +121,21 @@ namespace ClubAtleticoOrt.Controllers
             {
                 try
                 {
-                    if (!validarFecha(reserva.Fecha))
+                    if (!this.validarFecha(reserva.Fecha))
                     {
                         ViewData["Error"] = "La fecha no es valida";
                         return View();
                     }
-                    else if(!this.ExisteReserva(reserva))
+                    else if (this.existeReserva(reserva))
+                    {
+                        ViewData["Error"] = "Ups... Ya está reservado. Por favor, intente elegir otra cancha o elija un horario diferente";
+                        return View();
+                    }
+                    else 
                     {
                         //Eliminar de la DB la reserva original, antes de añadir la nueva
                         await this.DeleteConfirmed(id);
-                        
+
                         _context.Add(reserva);
                         await _context.SaveChangesAsync();
                         return RedirectToAction(nameof(Index));
@@ -203,42 +202,18 @@ namespace ClubAtleticoOrt.Controllers
             return fecha > fechaActual;
         }
 
-        /*private bool existeReserva(Reserva reserva)
-        {
-            int i = 0;
-            Boolean hayError = false;
-            var reservas = await _context.Reservas.ToListAsync();
-                                    
-            while(i < reservas.Count && !hayError)
-            {
-               if (reserva.Fecha == reservas[i].Fecha && reserva.id_cancha == reservas[i].id_cancha 
-                    && reserva.HoraInicio == reservas[i].HoraInicio)
-               {
-                   hayError = true;
-                   /*ViewData["Error"] = "La cancha y la fecha estan ocupadas.";
-                   return View();*/
-              /* }
-                else
-                { 
-                    i++;
-                }
-            }
-            return hayError;
-        }*/
-
-        private bool ExisteReserva(Reserva reserva)  {
+        private bool existeReserva(Reserva reserva)  {
             bool encontrado = false;
             var reservasPorCancha = (from d in _context.Reservas
-                                     where d.id_cancha == reserva.id_cancha && d.HoraInicio == reserva.HoraInicio
+                                     where d.Fecha == reserva.Fecha 
+                                        && d.HoraInicio == reserva.HoraInicio
+                                        && d.id_cancha == reserva.id_cancha
                                      select d.HoraInicio).ToList();
-
             if (reservasPorCancha.Count() > 0)
             {
                 encontrado = true; 
             }
-
             return encontrado;
-        
         }
     }
 }
