@@ -1,63 +1,83 @@
-﻿@{
-    ViewData["Title"] = "Login";
+﻿@model ClubAtleticoOrt.Models.Usuario
+
+@{
+    ViewData["Title"] = "Registro";
 }
 
 <link href="~/css/StyleSheet.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
 
-<form class="formulario">
+<form class="formulario" asp-action="Registro" method="post" style="margin-bottom: 80px" >
 
     <h1>Registrate</h1>
+    <p style="color:crimson">@ViewData["DatoExistente"]</p>
 
-    <div class="contenedorRegistro">
+    <div class="contenedorRegistro" style="margin-bottom: 150px">
 
         <p id="errorNombreP" style="color: crimson;"></p>
-
+        <span id="iconoX" asp-validation-for="Nombre" style="color: crimson"></span>
         <div class="contenedor-input">
             <i class="fas fa-user icon"></i>
-            <input type="text" name="" id="nombre" placeholder="Introduce tu nombre"><span id="iconoX"></span>
+            <input type="text" asp-for="Nombre" name="Nombre" id="nombre" placeholder="Introduce tu nombre" required>
+        </div>
+
+
+        <span id="iconoX" asp-validation-for="Apellido" style="color: crimson"></span>
+        <div class="contenedor-input">
+            <i class="fas fa-user icon"></i>
+            <input type="text" asp-for="Apellido" name="Apellido" id="apellido" placeholder="Introduce tu apellido" required>
         </div>
 
 
         <p id="errorEmailP" style="color: crimson;"></p>
+        <span id="iconoX" asp-validation-for="Email" style="color: crimson"></span>
         <div class="contenedor-input">
             <i class="fas fa-envelope icon"></i>
-            <input type="text" name="" id="email" placeholder="Introduce tu email"><span id="iconoX2"></span>
+            <input type="text" asp-for="Email" name="Email" id="email" placeholder="Introduce tu email" required>
         </div>
 
 
 
 
         <p id="errorPassP" style="color: crimson;"></p>
+        <span id="iconoX" asp-validation-for="Contraseña" style="color: crimson"></span>
         <div class="contenedor-input">
             <i class="fas fa-key icon"></i>
-            <input type="password" name="" id="password" placeholder="Introduce una contraseña"><span id="iconoX3"></span>
+            <input type="password" asp-for="Contraseña" name="Contraseña" id="password" placeholder="Introduce una contraseña" required>
         </div>
 
+
         <p id="errorDniP" style="color: crimson;"></p>
+        <span id="iconoX" asp-validation-for="Dni" style="color: crimson"></span>
         <div class="contenedor-input">
             <i class="fas fa-id-card icon"></i>
-            <input type="text" name="" id="dni" placeholder="Introduce tu dni"><span id="iconoX3"></span>
+            <input type="text" asp-for="Dni" name="Dni" id="dni" placeholder="Introduce tu dni" required>
         </div>
 
         <p id="errorTelP" style="color: crimson;"></p>
+        <span id="iconoX" asp-validation-for="Telefono" style="color: crimson"></span>
         <div class="contenedor-input">
             <i class="fas fa-phone icon"></i>
-            <input type="tel" name="" class="telefono" placeholder="Introduce un numero telefonico"><span id="iconoX3"></span>
+            <input type="tel" asp-for="Telefono" name="Telefono" class="telefono" placeholder="Introduce un numero telefonico" required>
+
         </div>
+            <input type="submit" name="" id="boton" value="Registrate" class="button">
+
+            <p>Al registrarte, aceptas nuestras Condiciones de uso y Política de privacidad.</p>
+
+            <p>¿Ya tienes una cuenta? <a class="link" href="Login">Iniciar Sesión</a></p>
 
 
-        <input type="submit" name="" id="boton" value="Registrate" class="button">
-
-        <p>Al registrarte, aceptas nuestras Condiciones de uso y Política de privacidad.</p>
-
-        <p>¿Ya tienes una cuenta? <a class="link" href="Login">Iniciar Sesión</a></p>
-
-
+        
     </div>
 
 </form>
 
 
 <script src="../js/registro.js"></script>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

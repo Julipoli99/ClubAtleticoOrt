@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Primitives;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,6 +10,8 @@ namespace ClubAtleticoOrt.Models
 {
     public class Usuario
     {
+        internal readonly StringValues campo;
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
