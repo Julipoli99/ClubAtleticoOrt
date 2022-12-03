@@ -9,20 +9,23 @@ namespace ClubAtleticoOrt.Models
 {
     public class Reserva
     {
+        private const CAMPO_REQUERIDO = "Este campo es requerido.";
+        private const ELEGIR_CANCHA = "Selecciona un tipo de cancha.";
+
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Este campo es requerido.")]
+        [Required(ErrorMessage = CAMPO_REQUERIDO)]
         public DateTime Fecha { get; set; }
 
-        [Required(ErrorMessage = "Este campo es requerido.")]
+        [Required(ErrorMessage = CAMPO_REQUERIDO)]
         public int HoraInicio { get; set; }
 
-        [Required(ErrorMessage = "Este campo es requerido.")]
+        [Required(ErrorMessage = CAMPO_REQUERIDO)]
         public int HoraFin { get; set; }
 
         // [EnumDataType(typeof(TipoCancha))]
-        [Required(ErrorMessage = "Selecciona un tipo de cancha.")]
+        [Required(ErrorMessage = ELEGIR_CANCHA)]
         [ForeignKey("Cancha")]
         public int id_cancha { get; set; }
 
