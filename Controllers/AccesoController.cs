@@ -17,12 +17,12 @@ namespace ClubAtleticoOrt.Controllers
     {
 
         private readonly ClubDatabaseContext _context;
-        private const NOMBRE = "Nombre";
-        private const APELLIDO = "Apellido";
-        private const DNI = "Dni";
-        private const CONTRASEÑA = "Contraseña";
-        private const EMAIL = "Email";
-        private const TELEFONO = "Telefono";
+        private const string NOMBRE = "Nombre";
+        private const string APELLIDO = "Apellido";
+        private const string DNI = "Dni";
+        private const string CONTRASEÑA = "Contraseña";
+        private const string EMAIL = "Email";
+        private const string TELEFONO = "Telefono";
 
         public AccesoController(ClubDatabaseContext context)
         {

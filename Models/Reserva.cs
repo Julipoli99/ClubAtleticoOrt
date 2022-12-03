@@ -9,8 +9,8 @@ namespace ClubAtleticoOrt.Models
 {
     public class Reserva
     {
-        private const CAMPO_REQUERIDO = "Este campo es requerido.";
-        private const ELEGIR_CANCHA = "Selecciona un tipo de cancha.";
+        private const string CAMPO_REQUERIDO = "Este campo es requerido.";
+        private const string ELEGIR_CANCHA = "Selecciona un tipo de cancha.";
 
         [Key]
         public int Id { get; set; }
