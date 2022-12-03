@@ -17,6 +17,12 @@ namespace ClubAtleticoOrt.Controllers
     {
 
         private readonly ClubDatabaseContext _context;
+        private const NOMBRE = "Nombre";
+        private const APELLIDO = "Apellido";
+        private const DNI = "Dni";
+        private const CONTRASEÑA = "Contraseña";
+        private const EMAIL = "Email";
+        private const TELEFONO = "Telefono";
 
         public AccesoController(ClubDatabaseContext context)
         {
@@ -39,17 +45,17 @@ namespace ClubAtleticoOrt.Controllers
         public async Task<IActionResult> Registro(Usuario usuario)
         {
             var usuarios = await _context.Usuarios.ToListAsync();
-            bool EmailExistente = BuscarDatoUsuario("Email", usuarios);
-            bool DniExistente = BuscarDatoUsuario("Dni", usuarios);
+            bool EmailExistente = BuscarDatoUsuario(EMAIL, usuarios);
+            bool DniExistente = BuscarDatoUsuario(DNI, usuarios);
 
             if (ModelState.IsValid && !EmailExistente && !DniExistente)
             {
-                usuario.Nombre = Request.Form["Nombre"];
-                usuario.Apellido = Request.Form["Apellido"];
-                usuario.Email = Request.Form["Email"];
-                usuario.Contraseña = Request.Form["Contraseña"];
+                usuario.Nombre = Request.Form[NOMBRE];
+                usuario.Apellido = Request.Form[APELLIDO];
+                usuario.Email = Request.Form[EMAIL];
+                usuario.Contraseña = Request.Form[CONTRASEÑA];
                 usuario.FechaInscripto = DateTime.Now;
-                usuario.Telefono = Request.Form["Telefono"];
+                usuario.Telefono = Request.Form[TELEFONO];
 
                 _context.Usuarios.Add(usuario);
                 await _context.SaveChangesAsync();
@@ -68,17 +74,11 @@ namespace ClubAtleticoOrt.Controllers
 
             while (i < lista.Count && !encontrado)
             {
-                if (lista[i].Email == Request.Form[campo])
+                if (lista[i].Email == Request.Form[campo] || lista[i].Dni == Request.Form[campo])
                 {
                     encontrado = true;
-                    ViewData["DatoExistente"] = "El " + campo + " ya se encuentra registrado";
+                    ViewData["DatoExistente"] = $"El {campo} ya se encuentra registrado";
                 }
-                else if(lista[i].Dni == Request.Form[campo])
-                {
-                    encontrado = true;
-                    ViewData["DatoExistente"] = "El " + campo + " ya se encuentra registrado";
-                }
-
                 else
                 {
                     i++;
