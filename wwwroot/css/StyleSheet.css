@@ -11,10 +11,15 @@
 }
 
 
+h1{
+    color: red;
+}
+
 
 .contenedor {
     width: 100%;
     padding: 15px;
+    margin-bottom: 50px
 }
 
 .contenedorRegistro {
@@ -29,6 +34,7 @@
     opacity: .8;
     margin-top: 150px;
     padding: 3px;
+    
 }
 
     .formulario:hover {
