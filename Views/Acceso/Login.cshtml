@@ -5,22 +5,23 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
 <div class="imagen"></div>
-    <form class="formulario">
+    <form class="formulario" asp-action="Login" method="post">
 
         <h1>Ingresa</h1>
+        <p style="color:crimson">@ViewData["invalido"]</p>
 
         <div class="contenedor">
 
             <p id="errorEmailP" style="color: crimson;"></p>
             <div class="contenedor-input">
                 <i class="fas fa-envelope icon"></i>
-                <input type="text" name="" id="email" placeholder="Introduce tu email"><span id="iconoX"></span>
+                <input type="text" name="email" id="email" placeholder="Introduce tu email"><span id="iconoX"></span>
             </div>
 
             <p id="errorPassP" style="color: crimson;"></p>
             <div class="contenedor-input">
                 <i class="fas fa-key icon"></i>
-                <input type="password" name="" id="password" placeholder="Introduce tu contraseña"><span id="iconoX2"></span>
+                <input type="password" name="contraseña" id="password" placeholder="Introduce tu contraseña"><span id="iconoX2"></span>
             </div>
 
             <input type="submit" name="" id="boton" value="Ingresa" class="button">

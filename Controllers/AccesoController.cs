@@ -8,6 +8,7 @@ using ClubAtleticoOrt.Context;
 using ClubAtleticoOrt.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 
 
 
@@ -15,6 +16,7 @@ namespace ClubAtleticoOrt.Controllers
 {
     public class AccesoController : Controller
     {
+
 
         private readonly ClubDatabaseContext _context;
         private const string NOMBRE = "Nombre";
@@ -29,10 +31,40 @@ namespace ClubAtleticoOrt.Controllers
             _context = context;
         }
 
+
+        //GET Acceso/Login
         public ActionResult Login()
         {
             return View();
         }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(Usuario usuario)
+        {
+            
+            var usuarios = await _context.Usuarios.ToListAsync();
+            bool coincideEmail = BuscarDatoUsuario(EMAIL, usuarios);
+            bool coincideContraseña = BuscarDatoUsuario(CONTRASEÑA, usuarios);
+
+              if(coincideEmail && coincideContraseña)
+              {
+                //ViewData["Usuario"] = usuario;
+
+               // HttpContext.Session.SetString("nombre", usuario.Apellido);
+               // HttpContext.Session.SetString("usuario", JsonConvert.SerializeObject(usuario));
+
+              //  ViewData["usuario"] = usuario.Nombre;
+
+                return RedirectToAction("Index", "Home");
+              }
+            return View(usuario);
+        }
+
+
+        
 
 
         public ActionResult Registro()
@@ -74,10 +106,11 @@ namespace ClubAtleticoOrt.Controllers
 
             while (i < lista.Count && !encontrado)
             {
-                if (lista[i].Email == Request.Form[campo] || lista[i].Dni == Request.Form[campo])
+                if (lista[i].Email == Request.Form[campo] || lista[i].Dni == Request.Form[campo] || lista[i].Contraseña == Request.Form[campo])
                 {
                     encontrado = true;
                     ViewData["DatoExistente"] = $"El {campo} ya se encuentra registrado";
+                    ViewData["invalido"] = "Credenciales invalidas";
                 }
                 else
                 {

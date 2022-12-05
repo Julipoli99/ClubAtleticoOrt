@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace ClubAtleticoOrt.Controllers
 {
@@ -21,7 +23,23 @@ namespace ClubAtleticoOrt.Controllers
 
         public IActionResult Index()
         {
-            ViewData["nombre"] = "julian";
+          /*  Usuario u = new Usuario();
+            if (HttpContext.Session.GetString("usuario") != null)
+            {
+                var res = HttpContext.Session.GetString("usuario");
+                u = JsonConvert.DeserializeObject<Usuario>(res);
+            }
+            else
+            {
+                u.Nombre = "NA";
+                u.Apellido = "NA";
+                u.Email = "NA";
+                u.Contraseña = "NA";
+                u.FechaInscripto = DateTime.Today;
+                u.Telefono = "NA";
+            }
+            ViewBag.Name = HttpContext.Session.GetString("nombre") == null ? "NA" : HttpContext.Session.GetString("nombre").ToString();*/
+            
             return View();
         }
 
@@ -35,5 +53,31 @@ namespace ClubAtleticoOrt.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+       /* public ActionResult mostrarNombre()
+        {
+            Usuario u = new Usuario();
+            if(HttpContext.Session.GetString("usuario") != null)
+            {
+                var res = HttpContext.Session.GetString("usuario");
+                u = JsonConvert.DeserializeObject<Usuario>(res);
+            }
+            else
+            {
+                u.Nombre = "NA";
+                u.Apellido = "NA";
+                u.Email = "NA";
+                u.Contraseña = "NA";
+                u.FechaInscripto = DateTime.Today;
+                u.Telefono = "NA";
+            }
+            ViewBag["nombre"] = HttpContext.Session.GetString("nombre") == null ? "NA" : HttpContext.Session.GetString("nombre").ToString();
+        }
+
+        public ActionResult CerrarSesion()
+        {
+            HttpContext.Session.Get("usuario").;
+        }*/
     }
 }
