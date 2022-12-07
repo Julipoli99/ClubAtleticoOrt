@@ -32,4 +32,6 @@
     <None Include="wwwroot\js\JavaScript.js" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
 </Project>
