@@ -34,8 +34,8 @@ namespace ClubAtleticoOrt.Models
         // [EnumDataType(typeof(TipoCancha))]
         [Required(ErrorMessage = ELEGIR_CANCHA)]
         //[ForeignKey("Cancha")]
-        [Range(00, 03, ErrorMessage = RANGO_CANCHA)]
-        public int id_cancha { get; set; }
+        [Range(01, 03, ErrorMessage = RANGO_CANCHA)]
+        public int Nro_cancha { get; set; }
 
         /* [ForeignKey("Usuario")]*/
         [Required(ErrorMessage = CAMPO_REQUERIDO)]

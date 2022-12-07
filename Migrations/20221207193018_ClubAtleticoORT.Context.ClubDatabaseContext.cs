@@ -29,7 +29,7 @@ namespace ClubAtleticoOrt.Migrations
                     Fecha = table.Column<DateTime>(nullable: false),
                     HoraInicio = table.Column<int>(nullable: false),
                     HoraFin = table.Column<int>(nullable: false),
-                    id_cancha = table.Column<int>(nullable: false),
+                    Nro_cancha = table.Column<int>(nullable: false),
                     Nro_Dni = table.Column<string>(maxLength: 8, nullable: false)
                 },
                 constraints: table =>

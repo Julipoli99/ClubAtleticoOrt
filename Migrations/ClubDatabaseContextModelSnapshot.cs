@@ -55,7 +55,7 @@ namespace ClubAtleticoOrt.Migrations
                         .HasColumnType("nvarchar(8)")
                         .HasMaxLength(8);
 
-                    b.Property<int>("id_cancha")
+                    b.Property<int>("Nro_cancha")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

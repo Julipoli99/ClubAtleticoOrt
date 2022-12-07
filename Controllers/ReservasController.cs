@@ -59,7 +59,7 @@ namespace ClubAtleticoOrt.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Fecha,HoraInicio,HoraFin,id_cancha,Nro_Dni")] Reserva reserva)
+        public async Task<IActionResult> Create([Bind("Id,Fecha,HoraInicio,HoraFin,Nro_cancha,Nro_Dni")] Reserva reserva)
         {
             if (ModelState.IsValid)
             {
@@ -124,7 +124,7 @@ namespace ClubAtleticoOrt.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Fecha,HoraInicio,HoraFin,id_cancha,Nro_Dni")] Reserva reserva)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Fecha,HoraInicio,HoraFin,Nro_cancha,Nro_Dni")] Reserva reserva)
         {
             if (id != reserva.Id)
             {
@@ -226,7 +226,7 @@ namespace ClubAtleticoOrt.Controllers
             var reservasPorCancha = (from d in _context.Reservas
                                      where d.Fecha.DayOfYear == reserva.Fecha.DayOfYear 
                                         && d.HoraInicio == reserva.HoraInicio
-                                        && d.id_cancha == reserva.id_cancha
+                                        && d.Nro_cancha == reserva.Nro_cancha
                                      select d.HoraInicio).ToList();
             if (reservasPorCancha.Count() > 0)
             {
