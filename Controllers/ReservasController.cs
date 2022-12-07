@@ -15,7 +15,7 @@ namespace ClubAtleticoOrt.Controllers
     public class ReservasController : Controller
     {
         private readonly ClubDatabaseContext _context;
-        private const string USUARIO_INVALIDO = "El no está registrado";
+        private const string USUARIO_INVALIDO = "El Dni no está registrado, debe crear un Usuario";
         private const string FECHA_INVALIDA = "La fecha no es valida";
         private const string EXISTE_RESERVA = "Ups... Ya está reservado. Por favor, intente elegir otra cancha o elija un horario diferente";
 
