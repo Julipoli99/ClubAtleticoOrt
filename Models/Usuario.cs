@@ -25,7 +25,8 @@ namespace ClubAtleticoOrt.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = CAMPO_REQUERIDO)]
-        [RegularExpression(@"/d{8}", ErrorMessage = RANGO_DNI)]
+        [MaxLength(8, ErrorMessage = RANGO_DNI)]
+        [MinLength(8, ErrorMessage = RANGO_DNI)]
         public string Dni { get; set; }
 
         [Required(ErrorMessage = CAMPO_REQUERIDO)]

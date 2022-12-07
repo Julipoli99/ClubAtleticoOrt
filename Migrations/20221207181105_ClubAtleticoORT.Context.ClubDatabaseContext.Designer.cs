@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClubAtleticoOrt.Migrations
 {
     [DbContext(typeof(ClubDatabaseContext))]
-    [Migration("20221207015430_ClubAtleticoORT.Context.ClubDatabaseContext")]
+    [Migration("20221207181105_ClubAtleticoORT.Context.ClubDatabaseContext")]
     partial class ClubAtleticoORTContextClubDatabaseContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

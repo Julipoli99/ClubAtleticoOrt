@@ -39,7 +39,8 @@ namespace ClubAtleticoOrt.Models
 
         /* [ForeignKey("Usuario")]*/
         [Required(ErrorMessage = CAMPO_REQUERIDO)]
-        [RegularExpression(@"/d{8}", ErrorMessage = RANGO_DNI)]
+        [MaxLength(8, ErrorMessage = RANGO_DNI)]
+        [MinLength(8, ErrorMessage = RANGO_DNI)]
         public int Nro_Dni { get; set; }
     }
 }
