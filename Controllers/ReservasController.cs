@@ -15,6 +15,7 @@ namespace ClubAtleticoOrt.Controllers
     public class ReservasController : Controller
     {
         private readonly ClubDatabaseContext _context;
+        private const string USUARIO_INVALIDO = "El no está registrado";
         private const string FECHA_INVALIDA = "La fecha no es valida";
         private const string EXISTE_RESERVA = "Ups... Ya está reservado. Por favor, intente elegir otra cancha o elija un horario diferente";
 
@@ -58,19 +59,18 @@ namespace ClubAtleticoOrt.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Fecha,HoraInicio,HoraFin,id_cancha, id_usuario")] Reserva reserva)
+        public async Task<IActionResult> Create([Bind("Id,Fecha,HoraInicio,HoraFin,id_cancha,Nro_Dni")] Reserva reserva)
         {
             if (ModelState.IsValid)
             {
 
                 // reserva.id_usuario = Int32.Parse(HttpContext.Session.GetString("usuario"));
 
-                if (!validarUsuario(reserva.id_usuario.ToString()))
+                if (!this.validarUsuario(reserva.Nro_Dni.ToString()))
                 {
-                    ViewData["Error"] = "Prueba usuario";
+                    ViewData["Error"] = USUARIO_INVALIDO;
                     return View();
                 }
-
 
                 try
                 {
@@ -124,11 +124,17 @@ namespace ClubAtleticoOrt.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Fecha,HoraInicio,HoraFin,id_cancha")] Reserva reserva)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Fecha,HoraInicio,HoraFin,id_cancha,Nro_Dni")] Reserva reserva)
         {
             if (id != reserva.Id)
             {
                 return NotFound();
+            }
+
+            if (!this.validarUsuario(reserva.Nro_Dni.ToString()))
+            {
+                ViewData["Error"] = USUARIO_INVALIDO;
+                return View();
             }
 
             if (ModelState.IsValid)
@@ -166,7 +172,6 @@ namespace ClubAtleticoOrt.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
             return View(reserva);
         }
