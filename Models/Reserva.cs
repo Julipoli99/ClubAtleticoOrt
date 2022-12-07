@@ -29,7 +29,7 @@ namespace ClubAtleticoOrt.Models
         [ForeignKey("Cancha")]
         public int id_cancha { get; set; }
 
-       /* [ForeignKey("Usuario")]
-        public int id_usuario { get; set; }*/
+        /* [ForeignKey("Usuario")]*/
+        public int id_usuario { get; set; }
     }
 }

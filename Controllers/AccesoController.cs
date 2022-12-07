@@ -53,10 +53,16 @@ namespace ClubAtleticoOrt.Controllers
               {
                 //ViewData["Usuario"] = usuario;
 
-               // HttpContext.Session.SetString("nombre", usuario.Apellido);
-               // HttpContext.Session.SetString("usuario", JsonConvert.SerializeObject(usuario));
+                // HttpContext.Session.SetString("nombre", usuario.Apellido);
+                // HttpContext.Session.SetString("usuario", JsonConvert.SerializeObject(usuario));
 
-              //  ViewData["usuario"] = usuario.Nombre;
+                //  ViewData["usuario"] = usuario.Nombre;
+
+                //ViewData["usuario"] = usuario.Id;
+
+                HttpContext.Session.SetString("usuario", usuario.Id.ToString());
+                
+
 
                 return RedirectToAction("Index", "Home");
               }

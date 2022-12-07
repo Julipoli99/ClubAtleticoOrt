@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ClubAtleticoOrt.Context;
 using ClubAtleticoOrt.Models;
+using Microsoft.AspNetCore.Http;
+
 
 namespace ClubAtleticoOrt.Controllers
 {
@@ -56,10 +58,20 @@ namespace ClubAtleticoOrt.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Fecha,HoraInicio,HoraFin,id_cancha")] Reserva reserva)
+        public async Task<IActionResult> Create([Bind("Id,Fecha,HoraInicio,HoraFin,id_cancha, id_usuario")] Reserva reserva)
         {
             if (ModelState.IsValid)
             {
+
+                // reserva.id_usuario = Int32.Parse(HttpContext.Session.GetString("usuario"));
+
+                if (!validarUsuario(reserva.id_usuario.ToString()))
+                {
+                    ViewData["Error"] = "Prueba usuario";
+                    return View();
+                }
+
+
                 try
                 {
                     if (!this.validarFecha(reserva.Fecha))
@@ -216,6 +228,12 @@ namespace ClubAtleticoOrt.Controllers
                 encontrado = true; 
             }
             return encontrado;
+        }
+
+
+        private bool validarUsuario(string dni)
+        {
+            return _context.Usuarios.Any(e => e.Dni == dni);
         }
 
     }
