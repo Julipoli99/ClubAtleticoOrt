@@ -12,10 +12,11 @@ namespace ClubAtleticoOrt.Models
     {
         internal readonly StringValues campo;
         private const string CAMPO_REQUERIDO = "Este campo es requerido.";
-        private const string FORMATO_INVALIDO = "Formato invalido";
+        private const string FORMATO_INVALIDO = "El email ingresado tiene un formato invalido";
         private const string CARACTERES_MAX = "El nombre no puede tener mas de 20 caracteres";
         private const string CARACTERES_MIN = "El nombre no puede tener menos de 2 caracteres";
         private const string MAYOR_CONTRASEÑA = "Por su seguridad, proporcione una contraseña con mas caracteres";
+        private const string RANGO_DNI = "El DNI debe contener 8 dígitos.";
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -24,6 +25,7 @@ namespace ClubAtleticoOrt.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = CAMPO_REQUERIDO)]
+        [RegularExpression(@"/d{8}", ErrorMessage = RANGO_DNI)]
         public string Dni { get; set; }
 
         [Required(ErrorMessage = CAMPO_REQUERIDO)]

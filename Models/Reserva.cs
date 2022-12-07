@@ -38,6 +38,7 @@ namespace ClubAtleticoOrt.Models
         public int id_cancha { get; set; }
 
         /* [ForeignKey("Usuario")]*/
+        [Required(ErrorMessage = CAMPO_REQUERIDO)]
         [RegularExpression(@"/d{8}", ErrorMessage = RANGO_DNI)]
         public int Nro_Dni { get; set; }
     }
