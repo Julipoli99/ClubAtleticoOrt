@@ -13,6 +13,7 @@ namespace ClubAtleticoOrt.Controllers
     public class UsuarioController : Controller
     {
         private readonly ClubDatabaseContext _context;
+        private const string USUARIO_REGISTRADO = "El Dni ya está registrado";
 
         public UsuarioController(ClubDatabaseContext context)
         {
@@ -24,10 +25,6 @@ namespace ClubAtleticoOrt.Controllers
         {
             return View(await _context.Usuarios.ToListAsync());
         }
-
-
-
-       
 
         // GET: Usuario/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -62,9 +59,18 @@ namespace ClubAtleticoOrt.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(usuario);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (this.UsuarioExists(usuario.Dni))
+                {
+                    ViewData["Error"] = "El Dni ya está registrado";
+                    return View();
+                }
+                else
+                {
+                    _context.Add(usuario);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                
             }
             return View(usuario);
         }
@@ -152,6 +158,10 @@ namespace ClubAtleticoOrt.Controllers
         private bool UsuarioExists(int id)
         {
             return _context.Usuarios.Any(e => e.Id == id);
+        }
+        private bool UsuarioExists(string dni)
+        {
+            return _context.Usuarios.Any(e => e.Dni == dni);
         }
     }
 }

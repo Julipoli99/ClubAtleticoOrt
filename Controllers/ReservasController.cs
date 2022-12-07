@@ -66,12 +66,12 @@ namespace ClubAtleticoOrt.Controllers
 
                 // reserva.id_usuario = Int32.Parse(HttpContext.Session.GetString("usuario"));
 
-                if (!this.validarUsuario(reserva.Nro_Dni.ToString()))
+                if (!this.validarUsuario(reserva.Nro_Dni))
                 {
                     ViewData["Error"] = USUARIO_INVALIDO;
                     return View();
                 }
-
+                
                 try
                 {
                     if (!this.validarFecha(reserva.Fecha))
@@ -131,7 +131,7 @@ namespace ClubAtleticoOrt.Controllers
                 return NotFound();
             }
 
-            if (!this.validarUsuario(reserva.Nro_Dni.ToString()))
+            if (!this.validarUsuario(reserva.Nro_Dni))
             {
                 ViewData["Error"] = USUARIO_INVALIDO;
                 return View();

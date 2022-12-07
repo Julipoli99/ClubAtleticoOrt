@@ -30,7 +30,7 @@ namespace ClubAtleticoOrt.Migrations
                     HoraInicio = table.Column<int>(nullable: false),
                     HoraFin = table.Column<int>(nullable: false),
                     id_cancha = table.Column<int>(nullable: false),
-                    Nro_Dni = table.Column<int>(nullable: false)
+                    Nro_Dni = table.Column<string>(maxLength: 8, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -43,7 +43,7 @@ namespace ClubAtleticoOrt.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Dni = table.Column<string>(nullable: false),
+                    Dni = table.Column<string>(maxLength: 8, nullable: false),
                     Nombre = table.Column<string>(maxLength: 20, nullable: false),
                     Apellido = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),

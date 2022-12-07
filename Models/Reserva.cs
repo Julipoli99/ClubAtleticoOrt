@@ -24,16 +24,16 @@ namespace ClubAtleticoOrt.Models
         public DateTime Fecha { get; set; }
 
         [Required(ErrorMessage = CAMPO_REQUERIDO)]
-        [Range(00, 24, ErrorMessage = RANGO_HORA_INICIO)]
+        [Range(00, 23, ErrorMessage = RANGO_HORA_INICIO)]
         public int HoraInicio { get; set; }
 
         [Required(ErrorMessage = CAMPO_REQUERIDO)]
-        [Range(01, 25, ErrorMessage = RANGO_HORA_FIN)]
+        [Range(01, 24, ErrorMessage = RANGO_HORA_FIN)]
         public int HoraFin { get; set; }
 
         // [EnumDataType(typeof(TipoCancha))]
         [Required(ErrorMessage = ELEGIR_CANCHA)]
-        [ForeignKey("Cancha")]
+        //[ForeignKey("Cancha")]
         [Range(00, 03, ErrorMessage = RANGO_CANCHA)]
         public int id_cancha { get; set; }
 
@@ -41,6 +41,6 @@ namespace ClubAtleticoOrt.Models
         [Required(ErrorMessage = CAMPO_REQUERIDO)]
         [MaxLength(8, ErrorMessage = RANGO_DNI)]
         [MinLength(8, ErrorMessage = RANGO_DNI)]
-        public int Nro_Dni { get; set; }
+        public string Nro_Dni { get; set; }
     }
 }

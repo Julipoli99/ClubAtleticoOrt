@@ -14,6 +14,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20221207181021_ClubAtleticoOrt.Context.ClubDatabaseContext.cs" />
     <Compile Remove="Migrations\20221207181021_ClubAtleticoOrt.Context.ClubDatabaseContext.Designer.cs" />
+    <Compile Remove="Migrations\20221207181105_ClubAtleticoORT.Context.ClubDatabaseContext.cs" />
+    <Compile Remove="Migrations\20221207181105_ClubAtleticoORT.Context.ClubDatabaseContext.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -50,8 +50,10 @@ namespace ClubAtleticoOrt.Migrations
                     b.Property<int>("HoraInicio")
                         .HasColumnType("int");
 
-                    b.Property<int>("Nro_Dni")
-                        .HasColumnType("int");
+                    b.Property<string>("Nro_Dni")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(8)")
+                        .HasMaxLength(8);
 
                     b.Property<int>("id_cancha")
                         .HasColumnType("int");
@@ -78,7 +80,8 @@ namespace ClubAtleticoOrt.Migrations
 
                     b.Property<string>("Dni")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(8)")
+                        .HasMaxLength(8);
 
                     b.Property<string>("Email")
                         .IsRequired()
