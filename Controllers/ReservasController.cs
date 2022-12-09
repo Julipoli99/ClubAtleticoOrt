@@ -216,9 +216,9 @@ namespace ClubAtleticoOrt.Controllers
 
         private bool validarFecha(DateTime fecha)
         {
-            var fechaActual = DateTime.Now;
+            //var fechaActual = DateTime.Now;
 
-            return fecha > fechaActual;
+            return fecha > DateTime.Now;
         }
 
         private bool existeReserva(Reserva reserva)  {

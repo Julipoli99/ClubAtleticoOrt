@@ -66,6 +66,7 @@ namespace ClubAtleticoOrt.Controllers
                 }
                 else
                 {
+                    usuario.FechaInscripto = DateTime.Now; //Para que la fecha se setee a la actual independientemente de lo que haya colocado el usuario
                     _context.Add(usuario);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -109,6 +110,27 @@ namespace ClubAtleticoOrt.Controllers
                 {
                     _context.Update(usuario);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                    /*
+                    if (this.ValidarUsuario(id, usuario))//VALIDAR QUE EL DNI DEL USUARIO SEA EL MISMO
+                    {
+                        //usuario.FechaInscripto = aux.FechaInscripto; //Se verifica que la fecha de inscripcion sea la original
+                        var fecha = (from d in _context.Usuarios
+                                     where d.Id == id
+                                     select d.FechaInscripto).ToString();
+
+                        //usuario.FechaInscripto == DateTime.Parse(fecha);
+
+                        _context.Update(usuario);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        ViewData["Error"] = "No debe modificarse el Nro de DNI";
+                        return View();
+                    }
+                    */
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -121,7 +143,6 @@ namespace ClubAtleticoOrt.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
             return View(usuario);
         }
@@ -162,6 +183,21 @@ namespace ClubAtleticoOrt.Controllers
         private bool UsuarioExists(string dni)
         {
             return _context.Usuarios.Any(e => e.Dni == dni);
+        }
+
+        private bool ValidarUsuario(int id, Usuario usuario)
+        {
+            var aux = (from d in _context.Usuarios
+                        where d.Id == id
+                       select d.Dni);
+            if (aux.ToString() == usuario.Dni)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
