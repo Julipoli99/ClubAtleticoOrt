@@ -14,10 +14,12 @@ namespace ClubAtleticoOrt.Controllers
 {
     public class ReservasController : Controller
     {
+        #region Constantes
         private readonly ClubDatabaseContext _context;
         private const string USUARIO_INVALIDO = "El Dni no está registrado, debe crear un Usuario";
         private const string FECHA_INVALIDA = "La fecha no es valida";
         private const string EXISTE_RESERVA = "Ups... Ya está reservado. Por favor, intente elegir otra cancha o elija un horario diferente";
+        #endregion
 
         public ReservasController(ClubDatabaseContext context)
         {
@@ -30,6 +32,7 @@ namespace ClubAtleticoOrt.Controllers
             return View(await _context.Reservas.ToListAsync());
         }
 
+        #region Details
         // GET: Reservas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -47,7 +50,9 @@ namespace ClubAtleticoOrt.Controllers
 
             return View(reserva);
         }
+        #endregion
 
+        #region Create
         // GET: Reservas/Create
         public IActionResult Create()
         {
@@ -100,7 +105,9 @@ namespace ClubAtleticoOrt.Controllers
             }
             return View(reserva);
         }
+        #endregion
 
+        #region Edit
         // GET: Reservas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -175,7 +182,9 @@ namespace ClubAtleticoOrt.Controllers
             }
             return View(reserva);
         }
+        #endregion
 
+        #region Delete
         // GET: Reservas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -205,8 +214,9 @@ namespace ClubAtleticoOrt.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        #endregion
 
-        //MÉTODOS AUXILIARES
+        #region Métodos_Auxiliares
 
         private bool ReservaExists(int id)
         {
@@ -241,5 +251,6 @@ namespace ClubAtleticoOrt.Controllers
             return _context.Usuarios.Any(e => e.Dni == dni);
         }
 
+        #endregion
     }
 }

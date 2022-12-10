@@ -11,15 +11,17 @@ namespace ClubAtleticoOrt.Models
     public class Usuario
     {
         internal readonly StringValues campo;
+
+        #region Constantes
         private const string CAMPO_REQUERIDO = "Este campo es requerido.";
         private const string FORMATO_INVALIDO = "El email ingresado tiene un formato inválido";
         private const string RANGO_CARACTERES = "El nombre puede tener entre 2 y 20 caracteres";
         private const string MAYOR_CONTRASEÑA = "Por su seguridad, proporcione una contraseña con más caracteres";
         private const string RANGO_DNI = "El DNI debe contener 8 dígitos.";
+        #endregion
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-
         [Required(ErrorMessage = CAMPO_REQUERIDO)]
         public int Id { get; set; }
 
@@ -47,10 +49,19 @@ namespace ClubAtleticoOrt.Models
         public string Contraseña { get; set; }
 
         [Required(ErrorMessage = CAMPO_REQUERIDO)]
+        //[Display(Name = "FechaInscripto")]
         public DateTime FechaInscripto { get; set; }
-
-        [Required(ErrorMessage = CAMPO_REQUERIDO)]
+        /*
+        {
+            get;
+            set
+            {
+                DateTime.Now;
+            }
+        }
+        */
        // [RegularExpression(@"= /^\d{10}$/", ErrorMessage = "Formato invalido")]
+        [Required(ErrorMessage = CAMPO_REQUERIDO)]
         [Phone(ErrorMessage = FORMATO_INVALIDO)]
         public string Telefono { get; set; }
     }

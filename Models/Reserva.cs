@@ -9,13 +9,14 @@ namespace ClubAtleticoOrt.Models
 {
     public class Reserva
     {
+        #region Constantes
         private const string CAMPO_REQUERIDO = "Este campo es requerido.";
         private const string ELEGIR_CANCHA = "Selecciona un tipo de cancha.";
         private const string RANGO_HORA_INICIO = "La hora de inicio no puede ser menor a 0 ni mayor a 23.";
         private const string RANGO_HORA_FIN = "La hora de fin no puede ser menor a 1 ni mayor a 24.";
         private const string RANGO_CANCHA = "Solo existen 3 canchas.";
         private const string RANGO_DNI = "El DNI debe contener 8 dígitos.";
-
+        #endregion
 
         [Key]
         public int Id { get; set; }

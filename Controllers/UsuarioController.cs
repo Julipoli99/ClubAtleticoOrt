@@ -13,7 +13,10 @@ namespace ClubAtleticoOrt.Controllers
     public class UsuarioController : Controller
     {
         private readonly ClubDatabaseContext _context;
+
+        #region Constantes
         private const string USUARIO_REGISTRADO = "El Dni ya está registrado";
+        #endregion
 
         public UsuarioController(ClubDatabaseContext context)
         {
@@ -26,6 +29,7 @@ namespace ClubAtleticoOrt.Controllers
             return View(await _context.Usuarios.ToListAsync());
         }
 
+        #region Details
         // GET: Usuario/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -43,7 +47,9 @@ namespace ClubAtleticoOrt.Controllers
 
             return View(usuario);
         }
+        #endregion
 
+        #region Create
         // GET: Usuario/Create
         public IActionResult Create()
         {
@@ -75,7 +81,9 @@ namespace ClubAtleticoOrt.Controllers
             }
             return View(usuario);
         }
+        #endregion
 
+        #region Edit
         // GET: Usuario/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -146,7 +154,9 @@ namespace ClubAtleticoOrt.Controllers
             }
             return View(usuario);
         }
+        #endregion
 
+        #region Delete
         // GET: Usuario/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -175,7 +185,9 @@ namespace ClubAtleticoOrt.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        #endregion
 
+        #region Métodos_Auxiliares
         private bool UsuarioExists(int id)
         {
             return _context.Usuarios.Any(e => e.Id == id);
@@ -199,5 +211,7 @@ namespace ClubAtleticoOrt.Controllers
                 return false;
             }
         }
+
+        #endregion
     }
 }
