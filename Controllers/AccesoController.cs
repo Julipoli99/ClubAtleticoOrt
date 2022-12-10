@@ -9,6 +9,8 @@ using ClubAtleticoOrt.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Session;
 
 
 
@@ -62,8 +64,14 @@ namespace ClubAtleticoOrt.Controllers
 
                 //ViewData["usuario"] = usuario.Id;
 
-                HttpContext.Session.SetString("usuario", usuario.Id.ToString());
-                
+                //HttpContext.Session.SetString("usuario", usuario.Id.ToString());
+
+
+                var getUsuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == usuario.Email);
+
+                HttpContext.Session.SetString("nombre", getUsuario.Nombre);
+
+
 
 
                 return RedirectToAction("Index", "Home");

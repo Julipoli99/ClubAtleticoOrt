@@ -42,9 +42,9 @@ namespace ClubAtleticoOrt
             .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
 
-            services.AddDistributedMemoryCache();
-
             services.AddSession();
+
+            services.AddMvc();
 
         }
 
@@ -68,6 +68,8 @@ namespace ClubAtleticoOrt
 
             app.UseAuthorization();
 
+            app.UseSession();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -75,7 +77,7 @@ namespace ClubAtleticoOrt
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            app.UseSession();
+            
         }
     }
 }

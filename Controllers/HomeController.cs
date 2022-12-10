@@ -8,6 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Session;
 
 namespace ClubAtleticoOrt.Controllers
 {
@@ -23,22 +25,28 @@ namespace ClubAtleticoOrt.Controllers
 
         public IActionResult Index()
         {
-          /*  Usuario u = new Usuario();
-            if (HttpContext.Session.GetString("usuario") != null)
-            {
-                var res = HttpContext.Session.GetString("usuario");
-                u = JsonConvert.DeserializeObject<Usuario>(res);
-            }
-            else
-            {
-                u.Nombre = "NA";
-                u.Apellido = "NA";
-                u.Email = "NA";
-                u.Contraseña = "NA";
-                u.FechaInscripto = DateTime.Today;
-                u.Telefono = "NA";
-            }
-            ViewBag.Name = HttpContext.Session.GetString("nombre") == null ? "NA" : HttpContext.Session.GetString("nombre").ToString();*/
+            /*  Usuario u = new Usuario();
+              if (HttpContext.Session.GetString("usuario") != null)
+              {
+                  var res = HttpContext.Session.GetString("usuario");
+                  u = JsonConvert.DeserializeObject<Usuario>(res);
+              }
+              else
+              {
+                  u.Nombre = "NA";
+                  u.Apellido = "NA";
+                  u.Email = "NA";
+                  u.Contraseña = "NA";
+                  u.FechaInscripto = DateTime.Today;
+                  u.Telefono = "NA";
+              }
+              ViewBag.Name = HttpContext.Session.GetString("nombre") == null ? "NA" : HttpContext.Session.GetString("nombre").ToString();*/
+
+            
+
+            var nombreUsuario = HttpContext.Session.GetString("nombre");
+
+            ViewBag.Nombre = nombreUsuario;
             
             return View();
         }
