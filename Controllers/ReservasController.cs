@@ -7,14 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ClubAtleticoOrt.Context;
 using ClubAtleticoOrt.Models;
+using Microsoft.AspNetCore.Http;
+
 
 namespace ClubAtleticoOrt.Controllers
 {
     public class ReservasController : Controller
     {
+        #region Constantes
         private readonly ClubDatabaseContext _context;
+        private const string USUARIO_INVALIDO = "El Dni no está registrado, debe crear un Usuario";
         private const string FECHA_INVALIDA = "La fecha no es valida";
         private const string EXISTE_RESERVA = "Ups... Ya está reservado. Por favor, intente elegir otra cancha o elija un horario diferente";
+        #endregion
 
         public ReservasController(ClubDatabaseContext context)
         {
@@ -27,6 +32,7 @@ namespace ClubAtleticoOrt.Controllers
             return View(await _context.Reservas.ToListAsync());
         }
 
+        #region Details
         // GET: Reservas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -44,7 +50,9 @@ namespace ClubAtleticoOrt.Controllers
 
             return View(reserva);
         }
+        #endregion
 
+        #region Create
         // GET: Reservas/Create
         public IActionResult Create()
         {
@@ -56,10 +64,19 @@ namespace ClubAtleticoOrt.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Fecha,HoraInicio,HoraFin,id_cancha")] Reserva reserva)
+        public async Task<IActionResult> Create([Bind("Id,Fecha,HoraInicio,HoraFin,Nro_cancha,Nro_Dni")] Reserva reserva)
         {
             if (ModelState.IsValid)
             {
+
+                // reserva.id_usuario = Int32.Parse(HttpContext.Session.GetString("usuario"));
+
+                if (!this.validarUsuario(reserva.Nro_Dni))
+                {
+                    ViewData["Error"] = USUARIO_INVALIDO;
+                    return View();
+                }
+                
                 try
                 {
                     if (!this.validarFecha(reserva.Fecha))
@@ -88,7 +105,9 @@ namespace ClubAtleticoOrt.Controllers
             }
             return View(reserva);
         }
+        #endregion
 
+        #region Edit
         // GET: Reservas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -112,11 +131,17 @@ namespace ClubAtleticoOrt.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Fecha,HoraInicio,HoraFin,id_cancha")] Reserva reserva)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Fecha,HoraInicio,HoraFin,Nro_cancha,Nro_Dni")] Reserva reserva)
         {
             if (id != reserva.Id)
             {
                 return NotFound();
+            }
+
+            if (!this.validarUsuario(reserva.Nro_Dni))
+            {
+                ViewData["Error"] = USUARIO_INVALIDO;
+                return View();
             }
 
             if (ModelState.IsValid)
@@ -154,11 +179,12 @@ namespace ClubAtleticoOrt.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
             return View(reserva);
         }
+        #endregion
 
+        #region Delete
         // GET: Reservas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -188,8 +214,9 @@ namespace ClubAtleticoOrt.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        #endregion
 
-        //MÉTODOS AUXILIARES
+        #region Métodos_Auxiliares
 
         private bool ReservaExists(int id)
         {
@@ -199,9 +226,9 @@ namespace ClubAtleticoOrt.Controllers
 
         private bool validarFecha(DateTime fecha)
         {
-            var fechaActual = DateTime.Now;
+            //var fechaActual = DateTime.Now;
 
-            return fecha > fechaActual;
+            return fecha > DateTime.Now;
         }
 
         private bool existeReserva(Reserva reserva)  {
@@ -209,7 +236,7 @@ namespace ClubAtleticoOrt.Controllers
             var reservasPorCancha = (from d in _context.Reservas
                                      where d.Fecha.DayOfYear == reserva.Fecha.DayOfYear 
                                         && d.HoraInicio == reserva.HoraInicio
-                                        && d.id_cancha == reserva.id_cancha
+                                        && d.Nro_cancha == reserva.Nro_cancha
                                      select d.HoraInicio).ToList();
             if (reservasPorCancha.Count() > 0)
             {
@@ -218,5 +245,12 @@ namespace ClubAtleticoOrt.Controllers
             return encontrado;
         }
 
+
+        private bool validarUsuario(string dni)
+        {
+            return _context.Usuarios.Any(e => e.Dni == dni);
+        }
+
+        #endregion
     }
 }

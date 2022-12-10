@@ -14,6 +14,10 @@ namespace ClubAtleticoOrt.Controllers
     {
         private readonly ClubDatabaseContext _context;
 
+        #region Constantes
+        private const string USUARIO_REGISTRADO = "El Dni ya está registrado";
+        #endregion
+
         public UsuarioController(ClubDatabaseContext context)
         {
             _context = context;
@@ -25,10 +29,7 @@ namespace ClubAtleticoOrt.Controllers
             return View(await _context.Usuarios.ToListAsync());
         }
 
-
-
-       
-
+        #region Details
         // GET: Usuario/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -46,7 +47,9 @@ namespace ClubAtleticoOrt.Controllers
 
             return View(usuario);
         }
+        #endregion
 
+        #region Create
         // GET: Usuario/Create
         public IActionResult Create()
         {
@@ -62,13 +65,25 @@ namespace ClubAtleticoOrt.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(usuario);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (this.UsuarioExists(usuario.Dni))
+                {
+                    ViewData["Error"] = "El Dni ya está registrado";
+                    return View();
+                }
+                else
+                {
+                    usuario.FechaInscripto = DateTime.Now; //Para que la fecha se setee a la actual independientemente de lo que haya colocado el usuario
+                    _context.Add(usuario);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                
             }
             return View(usuario);
         }
+        #endregion
 
+        #region Edit
         // GET: Usuario/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -103,6 +118,27 @@ namespace ClubAtleticoOrt.Controllers
                 {
                     _context.Update(usuario);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                    /*
+                    if (this.ValidarUsuario(id, usuario))//VALIDAR QUE EL DNI DEL USUARIO SEA EL MISMO
+                    {
+                        //usuario.FechaInscripto = aux.FechaInscripto; //Se verifica que la fecha de inscripcion sea la original
+                        var fecha = (from d in _context.Usuarios
+                                     where d.Id == id
+                                     select d.FechaInscripto).ToString();
+
+                        //usuario.FechaInscripto == DateTime.Parse(fecha);
+
+                        _context.Update(usuario);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        ViewData["Error"] = "No debe modificarse el Nro de DNI";
+                        return View();
+                    }
+                    */
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -115,11 +151,12 @@ namespace ClubAtleticoOrt.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
             return View(usuario);
         }
+        #endregion
 
+        #region Delete
         // GET: Usuario/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -148,10 +185,33 @@ namespace ClubAtleticoOrt.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        #endregion
 
+        #region Métodos_Auxiliares
         private bool UsuarioExists(int id)
         {
             return _context.Usuarios.Any(e => e.Id == id);
         }
+        private bool UsuarioExists(string dni)
+        {
+            return _context.Usuarios.Any(e => e.Dni == dni);
+        }
+
+        private bool ValidarUsuario(int id, Usuario usuario)
+        {
+            var aux = (from d in _context.Usuarios
+                        where d.Id == id
+                       select d.Dni);
+            if (aux.ToString() == usuario.Dni)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        #endregion
     }
 }

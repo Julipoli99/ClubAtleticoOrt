@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ClubAtleticoOrt.Models.Reserva>
+﻿@model ClubAtleticoOrt.Models.Reserva
 
 @{
     ViewData["Title"] = "Index";
@@ -23,7 +23,10 @@
             </th>
             <th>
                 Cancha
-                <!--@Html.DisplayNameFor(model => model.id_cancha)-->
+                <!--@Html.DisplayNameFor(model => model.Nro_cancha)-->
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nro_Dni)
             </th>
             <th></th>
         </tr>
@@ -40,8 +43,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.HoraFin)
             </td>
-            <td> 
-                @Html.DisplayFor(modelItem => item.id_cancha)
+            <td>
+                @Html.DisplayFor(modelItem => item.Nro_cancha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nro_Dni)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Editar</a> |

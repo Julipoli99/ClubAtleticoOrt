@@ -8,6 +8,9 @@ using ClubAtleticoOrt.Context;
 using ClubAtleticoOrt.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Session;
 
 
 
@@ -17,22 +20,67 @@ namespace ClubAtleticoOrt.Controllers
     {
 
         private readonly ClubDatabaseContext _context;
+        
+        #region Constantes
         private const string NOMBRE = "Nombre";
         private const string APELLIDO = "Apellido";
         private const string DNI = "Dni";
         private const string CONTRASEÑA = "Contraseña";
         private const string EMAIL = "Email";
         private const string TELEFONO = "Telefono";
+        #endregion
 
         public AccesoController(ClubDatabaseContext context)
         {
             _context = context;
         }
 
+
+        //GET Acceso/Login
         public ActionResult Login()
         {
             return View();
         }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(Usuario usuario)
+        {
+            
+            var usuarios = await _context.Usuarios.ToListAsync();
+            bool coincideEmail = BuscarDatoUsuario(EMAIL, usuarios);
+            bool coincideContraseña = BuscarDatoUsuario(CONTRASEÑA, usuarios);
+
+              if(coincideEmail && coincideContraseña)
+              {
+                //ViewData["Usuario"] = usuario;
+
+                // HttpContext.Session.SetString("nombre", usuario.Apellido);
+                // HttpContext.Session.SetString("usuario", JsonConvert.SerializeObject(usuario));
+
+                //  ViewData["usuario"] = usuario.Nombre;
+
+                //ViewData["usuario"] = usuario.Id;
+
+                //HttpContext.Session.SetString("usuario", usuario.Id.ToString());
+
+
+                var getUsuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == usuario.Email);
+
+                HttpContext.Session.SetString("nombre", getUsuario.Nombre);
+
+
+
+
+                return RedirectToAction("Index", "Home");
+              }
+            return View(usuario);
+        }
+
+
+        
 
 
         public ActionResult Registro()
@@ -74,10 +122,11 @@ namespace ClubAtleticoOrt.Controllers
 
             while (i < lista.Count && !encontrado)
             {
-                if (lista[i].Email == Request.Form[campo] || lista[i].Dni == Request.Form[campo])
+                if (lista[i].Email == Request.Form[campo] || lista[i].Dni == Request.Form[campo] || lista[i].Contraseña == Request.Form[campo])
                 {
                     encontrado = true;
                     ViewData["DatoExistente"] = $"El {campo} ya se encuentra registrado";
+                    ViewData["invalido"] = "Credenciales invalidas";
                 }
                 else
                 {
