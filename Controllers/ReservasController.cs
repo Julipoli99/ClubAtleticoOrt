@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ClubAtleticoOrt.Context;
 using ClubAtleticoOrt.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Session;
 
 
 namespace ClubAtleticoOrt.Controllers
@@ -56,6 +57,8 @@ namespace ClubAtleticoOrt.Controllers
         // GET: Reservas/Create
         public IActionResult Create()
         {
+            ViewBag.Dni = HttpContext.Session.GetString("dni_usuario");
+
             return View();
         }
 
@@ -66,27 +69,23 @@ namespace ClubAtleticoOrt.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Fecha,HoraInicio,HoraFin,Nro_cancha,Nro_Dni")] Reserva reserva)
         {
+
             if (ModelState.IsValid)
             {
-
-                // reserva.id_usuario = Int32.Parse(HttpContext.Session.GetString("usuario"));
-
-                if (!this.validarUsuario(reserva.Nro_Dni))
-                {
-                    ViewData["Error"] = USUARIO_INVALIDO;
-                    return View();
-                }
                 
+
                 try
                 {
                     if (!this.validarFecha(reserva.Fecha))
                     {
                         ViewData["Error"] = FECHA_INVALIDA;
+                        ViewBag.Dni = HttpContext.Session.GetString("dni_usuario");
                         return View();
                     }
                     else if (this.existeReserva(reserva))
                     {
                         ViewData["Error"] = EXISTE_RESERVA;
+                        ViewBag.Dni = HttpContext.Session.GetString("dni_usuario");
                         return View();
                     }
                     else 
@@ -103,6 +102,7 @@ namespace ClubAtleticoOrt.Controllers
                     "see your system administrator.");
                 }
             }
+            
             return View(reserva);
         }
         #endregion
