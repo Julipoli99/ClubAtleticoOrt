@@ -9,7 +9,6 @@ using ClubAtleticoOrt.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Session;
 
 
@@ -55,23 +54,11 @@ namespace ClubAtleticoOrt.Controllers
 
               if(coincideEmail && coincideContraseña)
               {
-                //ViewData["Usuario"] = usuario;
-
-                // HttpContext.Session.SetString("nombre", usuario.Apellido);
-                // HttpContext.Session.SetString("usuario", JsonConvert.SerializeObject(usuario));
-
-                //  ViewData["usuario"] = usuario.Nombre;
-
-                //ViewData["usuario"] = usuario.Id;
-
-                //HttpContext.Session.SetString("usuario", usuario.Id.ToString());
-
-
                 var getUsuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == usuario.Email);
 
                 HttpContext.Session.SetString("nombre", getUsuario.Nombre);
 
-
+                HttpContext.Session.SetString("dni_usuario", getUsuario.Dni);
 
 
                 return RedirectToAction("Index", "Home");
@@ -79,6 +66,15 @@ namespace ClubAtleticoOrt.Controllers
             return View(usuario);
         }
 
+
+
+        public ActionResult CerrarSesion()
+        {
+            HttpContext.Session.Remove("nombre");
+            HttpContext.Session.Remove("dni_usuario");
+
+            return RedirectToAction("Index", "Home");
+        }
 
         
 

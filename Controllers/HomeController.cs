@@ -25,28 +25,12 @@ namespace ClubAtleticoOrt.Controllers
 
         public IActionResult Index()
         {
-            /*  Usuario u = new Usuario();
-              if (HttpContext.Session.GetString("usuario") != null)
-              {
-                  var res = HttpContext.Session.GetString("usuario");
-                  u = JsonConvert.DeserializeObject<Usuario>(res);
-              }
-              else
-              {
-                  u.Nombre = "NA";
-                  u.Apellido = "NA";
-                  u.Email = "NA";
-                  u.Contraseña = "NA";
-                  u.FechaInscripto = DateTime.Today;
-                  u.Telefono = "NA";
-              }
-              ViewBag.Name = HttpContext.Session.GetString("nombre") == null ? "NA" : HttpContext.Session.GetString("nombre").ToString();*/
-
-            
-
             var nombreUsuario = HttpContext.Session.GetString("nombre");
 
+            var dni = HttpContext.Session.GetString("dni_usuario");
+
             ViewBag.Nombre = nombreUsuario;
+            ViewBag.Dni = dni;
             
             return View();
         }
