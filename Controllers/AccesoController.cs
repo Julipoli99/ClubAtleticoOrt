@@ -67,6 +67,15 @@ namespace ClubAtleticoOrt.Controllers
         }
 
 
+
+        public ActionResult CerrarSesion()
+        {
+            HttpContext.Session.Remove("nombre");
+            HttpContext.Session.Remove("dni_usuario");
+
+            return RedirectToAction("Index", "Home");
+        }
+
         
 
 
