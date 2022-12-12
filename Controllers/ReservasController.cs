@@ -76,10 +76,18 @@ namespace ClubAtleticoOrt.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Fecha,HoraInicio,HoraFin,Nro_cancha,Nro_Dni")] Reserva reserva)
+        public async Task<IActionResult> Create([Bind("Id,Fecha,HoraInicio,HoraFin,Nro_cancha")] Reserva reserva)
         {
+            bool next = false;
+            string dni = HttpContext.Session.GetString("dni_usuario");
+            
 
-            if (ModelState.IsValid)
+            if(reserva.Nro_Dni == null)
+            {
+                next = true;
+            }
+
+            if (ModelState.IsValid || next)
             {
                 
 
@@ -99,6 +107,7 @@ namespace ClubAtleticoOrt.Controllers
                     }
                     else 
                     {
+                        reserva.Nro_Dni = dni;
                         _context.Add(reserva);
                         await _context.SaveChangesAsync();
                         return RedirectToAction(nameof(Index));
@@ -152,20 +161,30 @@ namespace ClubAtleticoOrt.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Fecha,HoraInicio,HoraFin,Nro_cancha,Nro_Dni")] Reserva reserva)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Fecha,HoraInicio,HoraFin,Nro_cancha")] Reserva reserva)
         {
             if (id != reserva.Id)
             {
                 return NotFound();
             }
 
-            if (!this.validarUsuario(reserva.Nro_Dni))
+           /* if (!this.validarUsuario(reserva.Nro_Dni))
             {
                 ViewData["Error"] = USUARIO_INVALIDO;
                 return View();
+            }*/
+
+            bool next = false;
+            string dni = HttpContext.Session.GetString("dni_usuario");
+
+
+            if (reserva.Nro_Dni == null)
+            {
+                next = true;
             }
 
-            if (ModelState.IsValid)
+
+            if (ModelState.IsValid || next)
             {
                 try
                 {
@@ -182,9 +201,10 @@ namespace ClubAtleticoOrt.Controllers
                     else 
                     {
                         //Eliminar de la DB la reserva original, antes de añadir la nueva
-                        await this.DeleteConfirmed(id);
+                       // await this.DeleteConfirmed(id);
 
-                        _context.Add(reserva);
+                        reserva.Nro_Dni = dni;
+                        _context.Update(reserva);
                         await _context.SaveChangesAsync();
                         return RedirectToAction(nameof(Index));
                     }
