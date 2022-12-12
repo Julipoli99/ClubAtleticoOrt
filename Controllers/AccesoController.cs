@@ -17,7 +17,6 @@ namespace ClubAtleticoOrt.Controllers
 {
     public class AccesoController : Controller
     {
-
         private readonly ClubDatabaseContext _context;
         
         #region Constantes
@@ -38,6 +37,11 @@ namespace ClubAtleticoOrt.Controllers
         //GET Acceso/Login
         public ActionResult Login()
         {
+            if(HttpContext.Session.GetString("dni_usuario") != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 

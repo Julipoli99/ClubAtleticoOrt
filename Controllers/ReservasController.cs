@@ -30,6 +30,8 @@ namespace ClubAtleticoOrt.Controllers
         // GET: Reservas
         public async Task<IActionResult> Index()
         {
+            ViewBag.Nombre = HttpContext.Session.GetString("nombre");
+            ViewBag.Dni = HttpContext.Session.GetString("dni_usuario");
             return View(await _context.Reservas.ToListAsync());
         }
 
@@ -48,7 +50,7 @@ namespace ClubAtleticoOrt.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.Nombre = HttpContext.Session.GetString("nombre");
             return View(reserva);
         }
         #endregion
@@ -57,7 +59,14 @@ namespace ClubAtleticoOrt.Controllers
         // GET: Reservas/Create
         public IActionResult Create()
         {
+
+            if (HttpContext.Session.GetString("dni_usuario") == null)
+            {
+                return RedirectToAction("Login", "Acceso");
+            }
+
             ViewBag.Dni = HttpContext.Session.GetString("dni_usuario");
+            ViewBag.Nombre = HttpContext.Session.GetString("nombre");
 
             return View();
         }
@@ -102,7 +111,6 @@ namespace ClubAtleticoOrt.Controllers
                     "see your system administrator.");
                 }
             }
-            
             return View(reserva);
         }
         #endregion
@@ -111,18 +119,31 @@ namespace ClubAtleticoOrt.Controllers
         // GET: Reservas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            Reserva reserva = await _context.Reservas.FindAsync(id);
+            string dniUsuarioReserva = reserva.Nro_Dni;
+
+            if (HttpContext.Session.GetString("dni_usuario") == null)
+            {
+                return RedirectToAction("Login", "Acceso");
+            }
+            else if(HttpContext.Session.GetString("dni_usuario") != dniUsuarioReserva)
+            {
+                return RedirectToAction("Index", "Reservas");
+            }
+            
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            Reserva reserva = await _context.Reservas.FindAsync(id);
+            
             
             if (reserva == null)
             {
                 return NotFound();
             }
-            
+            ViewBag.Nombre = HttpContext.Session.GetString("nombre");
             return View(reserva);
         }
 
@@ -188,13 +209,23 @@ namespace ClubAtleticoOrt.Controllers
         // GET: Reservas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            Reserva reserva = await _context.Reservas.FindAsync(id);
+            string dniUsuarioReserva = reserva.Nro_Dni;
+
+            if (HttpContext.Session.GetString("dni_usuario") == null)
+            {
+                return RedirectToAction("Login", "Acceso");
+            }
+            else if (HttpContext.Session.GetString("dni_usuario") != dniUsuarioReserva)
+            {
+                return RedirectToAction("Index", "Usuario");
+            }
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var reserva = await _context.Reservas
-                .FirstOrDefaultAsync(m => m.Id == id);
             if (reserva == null)
             {
                 return NotFound();

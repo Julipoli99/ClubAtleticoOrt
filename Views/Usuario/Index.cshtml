@@ -7,7 +7,11 @@
 <h1>Usuarios</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-secondary">Crear nuevo usuario</a>
+    @if (ViewBag.Dni == null)
+    {
+        <a asp-action="Create" class="btn btn-secondary">Crear nuevo usuario</a>
+    }
+
 </p>
 <table class="table">
     <thead>
@@ -60,12 +64,22 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Telefono)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Detalles</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Dar de Baja</a>
-            </td>
+
+            @if (ViewBag.Dni == item.Dni)
+            {
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Detalles</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Dar de Baja</a>
+                </td>
+            }
+
+
         </tr>
 }
+
+
+
+
     </tbody>
 </table>

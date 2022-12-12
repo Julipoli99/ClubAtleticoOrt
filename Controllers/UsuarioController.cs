@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ClubAtleticoOrt.Context;
 using ClubAtleticoOrt.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace ClubAtleticoOrt.Controllers
 {
@@ -26,6 +27,7 @@ namespace ClubAtleticoOrt.Controllers
         // GET: Usuario
         public async Task<IActionResult> Index()
         {
+            ViewBag.Dni = HttpContext.Session.GetString("dni_usuario");
             return View(await _context.Usuarios.ToListAsync());
         }
 
@@ -53,7 +55,7 @@ namespace ClubAtleticoOrt.Controllers
         // GET: Usuario/Create
         public IActionResult Create()
         {
-            return View();
+            return RedirectToAction("Registro", "Acceso");
         }
 
         // POST: Usuario/Create
@@ -87,12 +89,25 @@ namespace ClubAtleticoOrt.Controllers
         // GET: Usuario/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            var usuario = await _context.Usuarios.FindAsync(id);
+            string usuarioLogueadoDni = usuario.Dni;
+
+            if (HttpContext.Session.GetString("dni_usuario") == null)
+            {
+                return RedirectToAction("Login", "Acceso");
+            }
+            else if (HttpContext.Session.GetString("dni_usuario") != usuarioLogueadoDni)
+            {
+                return RedirectToAction("Index", "Usuario");
+            }
+
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var usuario = await _context.Usuarios.FindAsync(id);
+            
             if (usuario == null)
             {
                 return NotFound();
@@ -119,26 +134,7 @@ namespace ClubAtleticoOrt.Controllers
                     _context.Update(usuario);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
-                    /*
-                    if (this.ValidarUsuario(id, usuario))//VALIDAR QUE EL DNI DEL USUARIO SEA EL MISMO
-                    {
-                        //usuario.FechaInscripto = aux.FechaInscripto; //Se verifica que la fecha de inscripcion sea la original
-                        var fecha = (from d in _context.Usuarios
-                                     where d.Id == id
-                                     select d.FechaInscripto).ToString();
-
-                        //usuario.FechaInscripto == DateTime.Parse(fecha);
-
-                        _context.Update(usuario);
-                        await _context.SaveChangesAsync();
-                        return RedirectToAction(nameof(Index));
-                    }
-                    else
-                    {
-                        ViewData["Error"] = "No debe modificarse el Nro de DNI";
-                        return View();
-                    }
-                    */
+                    
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -160,13 +156,25 @@ namespace ClubAtleticoOrt.Controllers
         // GET: Usuario/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            var usuario = await _context.Usuarios.FindAsync(id);
+            string usuarioLogueadoDni = usuario.Dni;
+
+            if (HttpContext.Session.GetString("dni_usuario") == null)
+            {
+                return RedirectToAction("Login", "Acceso");
+            }
+            else if (HttpContext.Session.GetString("dni_usuario") != usuarioLogueadoDni)
+            {
+                return RedirectToAction("Index", "Usuario");
+            }
+
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var usuario = await _context.Usuarios
-                .FirstOrDefaultAsync(m => m.Id == id);
+            
             if (usuario == null)
             {
                 return NotFound();
