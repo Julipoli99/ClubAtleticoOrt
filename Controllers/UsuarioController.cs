@@ -64,7 +64,7 @@ namespace ClubAtleticoOrt.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Dni,Nombre,Apellido,Email,Contraseña,FechaInscripto,Telefono")] Usuario usuario)
+        public async Task<IActionResult> Create(string ConfirmarContraseña, [Bind("Id,Dni,Nombre,Apellido,Email,Contraseña,FechaInscripto,Telefono")] Usuario usuario)
         {
             if (ModelState.IsValid)
             {
@@ -137,6 +137,10 @@ namespace ClubAtleticoOrt.Controllers
             {
                 try
                 {
+                    _context.Update(usuario);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                    /*
                     if (this.EmailExists(usuario.Email))
                     {
                         ViewData["Error"] = EMAIL_REGISTRADO;
@@ -144,10 +148,8 @@ namespace ClubAtleticoOrt.Controllers
                     }
                     else
                     {
-                    _context.Update(usuario);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                    }
+                    
+                    }*/
                 }
                 catch (DbUpdateConcurrencyException)
                 {
