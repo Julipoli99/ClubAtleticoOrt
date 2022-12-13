@@ -17,6 +17,7 @@ namespace ClubAtleticoOrt.Controllers
 
         #region Constantes
         private const string USUARIO_REGISTRADO = "El Dni ya está registrado";
+        private const string EMAIL_REGISTRADO = "El eMail ya está registrado";
         #endregion
 
         public UsuarioController(ClubDatabaseContext context)
@@ -69,12 +70,12 @@ namespace ClubAtleticoOrt.Controllers
             {
                 if (this.UsuarioExists(usuario.Dni))
                 {
-                    ViewData["Error"] = "El Dni ya está registrado";
+                    ViewData["Error"] = USUARIO_REGISTRADO;
                     return View();
                 }
                 else if (this.EmailExists(usuario.Email))
                 {
-                    ViewData["Error"] = "El eMail ya está registrado";
+                    ViewData["Error"] = EMAIL_REGISTRADO;
                     return View();
                 }
                 else
@@ -138,7 +139,7 @@ namespace ClubAtleticoOrt.Controllers
                 {
                     if (this.EmailExists(usuario.Email))
                     {
-                        ViewData["Error"] = "El eMail ya está registrado";
+                        ViewData["Error"] = EMAIL_REGISTRADO;
                         return View();
                     }
                     else
