@@ -72,6 +72,11 @@ namespace ClubAtleticoOrt.Controllers
                     ViewData["Error"] = "El Dni ya está registrado";
                     return View();
                 }
+                else if (this.EmailExists(usuario.Email))
+                {
+                    ViewData["Error"] = "El eMail ya está registrado";
+                    return View();
+                }
                 else
                 {
                     usuario.FechaInscripto = DateTime.Now; //Para que la fecha se setee a la actual independientemente de lo que haya colocado el usuario
@@ -131,10 +136,17 @@ namespace ClubAtleticoOrt.Controllers
             {
                 try
                 {
+                    if (this.EmailExists(usuario.Email))
+                    {
+                        ViewData["Error"] = "El eMail ya está registrado";
+                        return View();
+                    }
+                    else
+                    {
                     _context.Update(usuario);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
-                    
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -203,6 +215,10 @@ namespace ClubAtleticoOrt.Controllers
         private bool UsuarioExists(string dni)
         {
             return _context.Usuarios.Any(e => e.Dni == dni);
+        }
+        private bool EmailExists(string eMail)
+        {
+            return _context.Usuarios.Any(e => e.Email == eMail);
         }
 
         private bool ValidarUsuario(int id, Usuario usuario)

@@ -108,6 +108,7 @@ namespace ClubAtleticoOrt.Controllers
                     else 
                     {
                         reserva.Nro_Dni = dni;
+                        reserva.HoraFin = reserva.HoraInicio + 1;
                         _context.Add(reserva);
                         await _context.SaveChangesAsync();
                         return RedirectToAction(nameof(Index));
