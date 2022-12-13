@@ -15,7 +15,7 @@ public class ClubDatabaseContext : DbContext
 		{
 		}
 		public DbSet<Usuario> Usuarios { get; set;}
-		public DbSet<Cancha> Canchas { get; set; }
+		//public DbSet<Cancha> Canchas { get; set; }
 		public DbSet<Reserva> Reservas { get; set; }
 
 	}
