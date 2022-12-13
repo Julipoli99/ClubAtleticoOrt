@@ -32,15 +32,19 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Usuarios</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Acceso" asp-action="Login">Login</a>
-                        </li>
 
-                        @if (ViewBag.Nombre != null)
+                        @if (ViewBag.Nombre == null)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Acceso" asp-action="CerrarSesion">Cerrar Sesion</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Acceso" asp-action="Login">Login</a>
                             </li>
+
+                        }
+                        else
+                        {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Acceso" asp-action="CerrarSesion">Cerrar Sesion</a>
+                        </li>
                         }
 
                     </ul>

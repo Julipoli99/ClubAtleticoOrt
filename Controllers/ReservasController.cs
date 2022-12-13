@@ -30,6 +30,8 @@ namespace ClubAtleticoOrt.Controllers
         // GET: Reservas
         public async Task<IActionResult> Index()
         {
+            ViewBag.Nombre = HttpContext.Session.GetString("nombre");
+            ViewBag.Dni = HttpContext.Session.GetString("dni_usuario");
             return View(await _context.Reservas.ToListAsync());
         }
 
@@ -48,7 +50,7 @@ namespace ClubAtleticoOrt.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.Nombre = HttpContext.Session.GetString("nombre");
             return View(reserva);
         }
         #endregion
@@ -57,7 +59,14 @@ namespace ClubAtleticoOrt.Controllers
         // GET: Reservas/Create
         public IActionResult Create()
         {
+
+            if (HttpContext.Session.GetString("dni_usuario") == null)
+            {
+                return RedirectToAction("Login", "Acceso");
+            }
+
             ViewBag.Dni = HttpContext.Session.GetString("dni_usuario");
+            ViewBag.Nombre = HttpContext.Session.GetString("nombre");
 
             return View();
         }
@@ -67,10 +76,18 @@ namespace ClubAtleticoOrt.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Fecha,HoraInicio,HoraFin,Nro_cancha,Nro_Dni")] Reserva reserva)
+        public async Task<IActionResult> Create([Bind("Id,Fecha,HoraInicio,HoraFin,Nro_cancha")] Reserva reserva)
         {
+            bool next = false;
+            string dni = HttpContext.Session.GetString("dni_usuario");
+            
 
-            if (ModelState.IsValid)
+            if(reserva.Nro_Dni == null)
+            {
+                next = true;
+            }
+
+            if (ModelState.IsValid || next)
             {
                 
 
@@ -90,6 +107,7 @@ namespace ClubAtleticoOrt.Controllers
                     }
                     else 
                     {
+                        reserva.Nro_Dni = dni;
                         _context.Add(reserva);
                         await _context.SaveChangesAsync();
                         return RedirectToAction(nameof(Index));
@@ -102,7 +120,6 @@ namespace ClubAtleticoOrt.Controllers
                     "see your system administrator.");
                 }
             }
-            
             return View(reserva);
         }
         #endregion
@@ -111,18 +128,31 @@ namespace ClubAtleticoOrt.Controllers
         // GET: Reservas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            Reserva reserva = await _context.Reservas.FindAsync(id);
+            string dniUsuarioReserva = reserva.Nro_Dni;
+
+            if (HttpContext.Session.GetString("dni_usuario") == null)
+            {
+                return RedirectToAction("Login", "Acceso");
+            }
+            else if(HttpContext.Session.GetString("dni_usuario") != dniUsuarioReserva)
+            {
+                return RedirectToAction("Index", "Reservas");
+            }
+            
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            Reserva reserva = await _context.Reservas.FindAsync(id);
+            
             
             if (reserva == null)
             {
                 return NotFound();
             }
-            
+            ViewBag.Nombre = HttpContext.Session.GetString("nombre");
             return View(reserva);
         }
 
@@ -131,20 +161,30 @@ namespace ClubAtleticoOrt.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Fecha,HoraInicio,HoraFin,Nro_cancha,Nro_Dni")] Reserva reserva)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Fecha,HoraInicio,HoraFin,Nro_cancha")] Reserva reserva)
         {
             if (id != reserva.Id)
             {
                 return NotFound();
             }
 
-            if (!this.validarUsuario(reserva.Nro_Dni))
+           /* if (!this.validarUsuario(reserva.Nro_Dni))
             {
                 ViewData["Error"] = USUARIO_INVALIDO;
                 return View();
+            }*/
+
+            bool next = false;
+            string dni = HttpContext.Session.GetString("dni_usuario");
+
+
+            if (reserva.Nro_Dni == null)
+            {
+                next = true;
             }
 
-            if (ModelState.IsValid)
+
+            if (ModelState.IsValid || next)
             {
                 try
                 {
@@ -161,9 +201,10 @@ namespace ClubAtleticoOrt.Controllers
                     else 
                     {
                         //Eliminar de la DB la reserva original, antes de añadir la nueva
-                        await this.DeleteConfirmed(id);
+                       // await this.DeleteConfirmed(id);
 
-                        _context.Add(reserva);
+                        reserva.Nro_Dni = dni;
+                        _context.Update(reserva);
                         await _context.SaveChangesAsync();
                         return RedirectToAction(nameof(Index));
                     }
@@ -188,13 +229,23 @@ namespace ClubAtleticoOrt.Controllers
         // GET: Reservas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            Reserva reserva = await _context.Reservas.FindAsync(id);
+            string dniUsuarioReserva = reserva.Nro_Dni;
+
+            if (HttpContext.Session.GetString("dni_usuario") == null)
+            {
+                return RedirectToAction("Login", "Acceso");
+            }
+            else if (HttpContext.Session.GetString("dni_usuario") != dniUsuarioReserva)
+            {
+                return RedirectToAction("Index", "Usuario");
+            }
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var reserva = await _context.Reservas
-                .FirstOrDefaultAsync(m => m.Id == id);
             if (reserva == null)
             {
                 return NotFound();
