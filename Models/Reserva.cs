@@ -36,9 +36,8 @@ namespace ClubAtleticoOrt.Models
         [Range(01, 03, ErrorMessage = RANGO_CANCHA)]
         public int Nro_cancha { get; set; }
 
-        [Required(ErrorMessage = CAMPO_REQUERIDO)]
-        [MaxLength(8, ErrorMessage = RANGO_DNI)]
-        [MinLength(8, ErrorMessage = RANGO_DNI)]
+        [Required(ErrorMessage = CAMPO_REQUERIDO), MinLength(8, ErrorMessage = RANGO_DNI), MaxLength(8, ErrorMessage = RANGO_DNI)]
+        [RegularExpression(@"[0-9]{1,9}(\.[0-9]{0,2})?$", ErrorMessage = RANGO_DNI)]
         public string Nro_Dni { get; set; }
     }
 }

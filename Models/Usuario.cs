@@ -27,23 +27,17 @@ namespace ClubAtleticoOrt.Models
         [Required(ErrorMessage = CAMPO_REQUERIDO)]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = CAMPO_REQUERIDO)]
+        [Required(ErrorMessage = CAMPO_REQUERIDO), MinLength(8, ErrorMessage = RANGO_DNI), MaxLength(8, ErrorMessage = RANGO_DNI)]
         [RegularExpression(@"[0-9]{1,9}(\.[0-9]{0,2})?$", ErrorMessage = RANGO_DNI)]
-        [MaxLength(8, ErrorMessage = RANGO_DNI)]
-        [MinLength(8, ErrorMessage = RANGO_DNI)]
         public string Dni { get; set; }
         
 
-        [Required(ErrorMessage = CAMPO_REQUERIDO)]
+        [Required(ErrorMessage = CAMPO_REQUERIDO), MinLength(2, ErrorMessage = RANGO_CARACTERES), MaxLength(20, ErrorMessage = RANGO_CARACTERES)]
         [RegularExpression(@"[a-zA-ZñÑ\s]{2,50}", ErrorMessage = FORMATO_NOMBRE_APELLIDO_INVALIDO)]
-        [MaxLength(20, ErrorMessage = RANGO_CARACTERES)]
-        [MinLength(2, ErrorMessage = RANGO_CARACTERES)]
         public string Nombre { get; set; }
 
-        [Required(ErrorMessage = CAMPO_REQUERIDO)]
+        [Required(ErrorMessage = CAMPO_REQUERIDO), MinLength(2, ErrorMessage = RANGO_CARACTERES), MaxLength(20, ErrorMessage = RANGO_CARACTERES)]
         [RegularExpression(@"[a-zA-ZñÑ\s]{2,50}", ErrorMessage = FORMATO_NOMBRE_APELLIDO_INVALIDO)]
-        [MaxLength(20, ErrorMessage = RANGO_CARACTERES)]
-        [MinLength(2, ErrorMessage = RANGO_CARACTERES)]
         public string Apellido { get; set; }
 
         [Required(ErrorMessage = CAMPO_REQUERIDO)]
@@ -58,8 +52,8 @@ namespace ClubAtleticoOrt.Models
         [Required(ErrorMessage = CAMPO_REQUERIDO)]
         public DateTime FechaInscripto { get; set; }
         
-        [Required(ErrorMessage = CAMPO_REQUERIDO)]
-        [Phone(ErrorMessage = FORMATO_TELEFONO_INVALIDO)]
+        [Required(ErrorMessage = CAMPO_REQUERIDO), MinLength(6, ErrorMessage = RANGO_DNI), MaxLength(10, ErrorMessage = RANGO_DNI)]
+        [RegularExpression(@"[0-9]{1,9}(\.[0-9]{0,2})?$", ErrorMessage = FORMATO_TELEFONO_INVALIDO)]
         public string Telefono { get; set; }
     }
 }
