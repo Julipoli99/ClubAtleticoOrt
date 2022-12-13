@@ -32,13 +32,10 @@ namespace ClubAtleticoOrt.Models
         [Range(01, 24, ErrorMessage = RANGO_HORA_FIN)]
         public int HoraFin { get; set; }
 
-        // [EnumDataType(typeof(TipoCancha))]
         [Required(ErrorMessage = ELEGIR_CANCHA)]
-        //[ForeignKey("Cancha")]
         [Range(01, 03, ErrorMessage = RANGO_CANCHA)]
         public int Nro_cancha { get; set; }
 
-        /* [ForeignKey("Usuario")]*/
         [Required(ErrorMessage = CAMPO_REQUERIDO)]
         [MaxLength(8, ErrorMessage = RANGO_DNI)]
         [MinLength(8, ErrorMessage = RANGO_DNI)]
