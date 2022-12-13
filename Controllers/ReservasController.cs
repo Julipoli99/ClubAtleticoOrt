@@ -205,6 +205,7 @@ namespace ClubAtleticoOrt.Controllers
                        // await this.DeleteConfirmed(id);
 
                         reserva.Nro_Dni = dni;
+                        reserva.HoraFin = reserva.HoraInicio + 1;
                         _context.Update(reserva);
                         await _context.SaveChangesAsync();
                         return RedirectToAction(nameof(Index));
