@@ -208,6 +208,8 @@ namespace ClubAtleticoOrt.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var usuario = await _context.Usuarios.FindAsync(id);
+            HttpContext.Session.Remove("dni_usuario");
+            HttpContext.Session.Remove("nombre");
             _context.Usuarios.Remove(usuario);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
