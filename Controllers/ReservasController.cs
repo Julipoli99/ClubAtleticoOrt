@@ -108,6 +108,7 @@ namespace ClubAtleticoOrt.Controllers
                     else 
                     {
                         reserva.Nro_Dni = dni;
+                        reserva.HoraFin = reserva.HoraInicio + 1;
                         _context.Add(reserva);
                         await _context.SaveChangesAsync();
                         return RedirectToAction(nameof(Index));
@@ -204,6 +205,7 @@ namespace ClubAtleticoOrt.Controllers
                        // await this.DeleteConfirmed(id);
 
                         reserva.Nro_Dni = dni;
+                        reserva.HoraFin = reserva.HoraInicio + 1;
                         _context.Update(reserva);
                         await _context.SaveChangesAsync();
                         return RedirectToAction(nameof(Index));
@@ -250,7 +252,7 @@ namespace ClubAtleticoOrt.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.Nombre = HttpContext.Session.GetString("nombre");
             return View(reserva);
         }
 

@@ -17,6 +17,7 @@ namespace ClubAtleticoOrt.Controllers
 
         #region Constantes
         private const string USUARIO_REGISTRADO = "El Dni ya está registrado";
+        private const string EMAIL_REGISTRADO = "El eMail ya está registrado";
         #endregion
 
         public UsuarioController(ClubDatabaseContext context)
@@ -27,6 +28,7 @@ namespace ClubAtleticoOrt.Controllers
         // GET: Usuario
         public async Task<IActionResult> Index()
         {
+            ViewBag.Nombre = HttpContext.Session.GetString("nombre");
             ViewBag.Dni = HttpContext.Session.GetString("dni_usuario");
             return View(await _context.Usuarios.ToListAsync());
         }
@@ -46,7 +48,7 @@ namespace ClubAtleticoOrt.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.Nombre = HttpContext.Session.GetString("nombre");
             return View(usuario);
         }
         #endregion
@@ -63,13 +65,18 @@ namespace ClubAtleticoOrt.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Dni,Nombre,Apellido,Email,Contraseña,FechaInscripto,Telefono")] Usuario usuario)
+        public async Task<IActionResult> Create(string ConfirmarContraseña, [Bind("Id,Dni,Nombre,Apellido,Email,Contraseña,FechaInscripto,Telefono")] Usuario usuario)
         {
             if (ModelState.IsValid)
             {
                 if (this.UsuarioExists(usuario.Dni))
                 {
-                    ViewData["Error"] = "El Dni ya está registrado";
+                    ViewData["Error"] = USUARIO_REGISTRADO;
+                    return View();
+                }
+                else if (this.EmailExists(usuario.Email))
+                {
+                    ViewData["Error"] = EMAIL_REGISTRADO;
                     return View();
                 }
                 else
@@ -112,6 +119,7 @@ namespace ClubAtleticoOrt.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Nombre = HttpContext.Session.GetString("nombre");
             return View(usuario);
         }
 
@@ -134,7 +142,16 @@ namespace ClubAtleticoOrt.Controllers
                     _context.Update(usuario);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
+                    /*
+                    if (this.EmailExists(usuario.Email))
+                    {
+                        ViewData["Error"] = EMAIL_REGISTRADO;
+                        return View();
+                    }
+                    else
+                    {
                     
+                    }*/
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -148,6 +165,7 @@ namespace ClubAtleticoOrt.Controllers
                     }
                 }
             }
+
             return View(usuario);
         }
         #endregion
@@ -179,6 +197,7 @@ namespace ClubAtleticoOrt.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Nombre = HttpContext.Session.GetString("nombre");
 
             return View(usuario);
         }
@@ -203,6 +222,10 @@ namespace ClubAtleticoOrt.Controllers
         private bool UsuarioExists(string dni)
         {
             return _context.Usuarios.Any(e => e.Dni == dni);
+        }
+        private bool EmailExists(string eMail)
+        {
+            return _context.Usuarios.Any(e => e.Email == eMail);
         }
 
         private bool ValidarUsuario(int id, Usuario usuario)

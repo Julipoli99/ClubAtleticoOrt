@@ -21,7 +21,7 @@
             <p id="errorPassP" style="color: crimson;"></p>
             <div class="contenedor-input">
                 <i class="fas fa-key icon"></i>
-                <input type="password" name="contraseña" id="password" placeholder="Introduce tu contraseña"><span id="iconoX2"></span>
+                <input type="password" name="contraseña" id="password" placeholder="Introduce tu contraseña"><i class="fas fa-eye" onclick="mostrar()"></i>
             </div>
 
             <input type="submit" name="" id="boton" value="Ingresa" class="button">
@@ -31,4 +31,16 @@
         </div>
     </form>
 
-<script src="../js/login.js"></script>
+<script>
+    let pass = document.getElementById("password");
+
+    function mostrar() {
+
+        if (pass.type == "password") {
+            pass.type = "text"
+        }
+        else {
+            pass.type = "password"
+        }
+    }
+</script>

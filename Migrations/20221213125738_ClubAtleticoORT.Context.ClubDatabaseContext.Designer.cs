@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClubAtleticoOrt.Migrations
 {
     [DbContext(typeof(ClubDatabaseContext))]
-    [Migration("20221207193018_ClubAtleticoORT.Context.ClubDatabaseContext")]
+    [Migration("20221213125738_ClubAtleticoORT.Context.ClubDatabaseContext")]
     partial class ClubAtleticoORTContextClubDatabaseContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,21 +20,6 @@ namespace ClubAtleticoOrt.Migrations
                 .HasAnnotation("ProductVersion", "3.1.30")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("ClubAtleticoOrt.Models.Cancha", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Descripcion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Canchas");
-                });
 
             modelBuilder.Entity("ClubAtleticoOrt.Models.Reserva", b =>
                 {
@@ -57,7 +42,7 @@ namespace ClubAtleticoOrt.Migrations
                         .HasColumnType("nvarchar(8)")
                         .HasMaxLength(8);
 
-                    b.Property<int>("id_cancha")
+                    b.Property<int>("Nro_cancha")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
