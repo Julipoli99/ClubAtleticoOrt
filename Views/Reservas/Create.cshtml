@@ -62,8 +62,6 @@
 <script>
     let form = document.getElementById("form");
 
-   // let options = document.querySelectorAll(".option");
-
     let fecha = document.getElementById("fecha");
 
     let select = document.getElementById("select");
@@ -72,7 +70,6 @@
 
     let horaFin = document.getElementById("horaFin");
 
-   // console.log(select)
 
     function opcionSeleccionada() {
         let opcion = select.value
@@ -101,9 +98,21 @@
 
           //  console.log(typeof horaFinal[0])
 
-          //  console.log(Number(horaFinal[0]) + 1) 
+            //  console.log(Number(horaFinal[0]) + 1) 
+            
         })
     }
+
+
+    horaInicio.addEventListener("keyup", (e) => {
+       // console.log(e.target.value)
+
+       // alert(e.target.value)
+
+        console.log(Number(e.target.value) + 1)
+
+        horaFin.value = Number(e.target.value) + 1
+    })
     
 </script>
 

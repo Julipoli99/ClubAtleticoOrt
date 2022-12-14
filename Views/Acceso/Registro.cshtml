@@ -40,11 +40,17 @@
 
 
 
-        <p id="errorPassP" style="color: crimson;"></p>
+        
         <span id="iconoX" asp-validation-for="Contraseña" style="color: crimson"></span>
         <div class="contenedor-input">
             <i class="fas fa-key icon"></i>
-            <input type="password" asp-for="Contraseña" name="Contraseña" id="password" placeholder="Introduce una contraseña" required>
+            <input type="password" asp-for="Contraseña" name="Contraseña" id="password" placeholder="Introduce una contraseña" required><i class="fas fa-eye" id="verContraseña" onclick="mostrar()"></i>
+        </div>
+
+        <p id="errorPassP" style="color: crimson;"></p>
+        <div class="contenedor-input">
+            <i class="fas fa-key icon"></i>
+            <input type="password" id="contraseñaConfirmada" placeholder="Confirmar contraseña" required>
         </div>
 
 
@@ -62,20 +68,48 @@
             <input type="tel" asp-for="Telefono" name="Telefono" class="telefono" placeholder="Introduce un numero telefonico" required>
 
         </div>
-            <input type="submit" name="" id="boton" value="Registrate" class="button">
+        <input type="submit" name="" id="boton" value="Registrate" class="button">
 
-            <p>Al registrarte, aceptas nuestras Condiciones de uso y Política de privacidad.</p>
+        <p>Al registrarte, aceptas nuestras Condiciones de uso y Política de privacidad.</p>
 
-            <p>¿Ya tienes una cuenta? <a class="link" href="Login">Iniciar Sesión</a></p>
+        <p>¿Ya tienes una cuenta? <a class="link" href="Login">Iniciar Sesión</a></p>
 
 
-        
+
     </div>
 
 </form>
 
 
-<script src="../js/registro.js"></script>
+<script>
+    let pass = document.getElementById("password");
+    let contraConfirmada = document.getElementById("contraseñaConfirmada");
+    let errorPassConfirmada = document.getElementById("errorPassP")
+    let verContraseña = document.getElementById("verContraseña")
+
+
+    contraConfirmada.addEventListener("keyup", (e) => {
+
+        if (e.target.value != pass.value) {
+            errorPassConfirmada.innerText = "La contraseña no coincide"
+        }
+        else {
+            errorPassConfirmada.innerText = "";
+        }
+    })
+
+    function mostrar() {
+       
+        if (pass.type == "password") {
+            pass.type = "text"
+        }
+        else {
+            pass.type = "password"
+        }
+    }
+   
+
+</script>
 
 
 @section Scripts {

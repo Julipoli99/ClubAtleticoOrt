@@ -28,6 +28,7 @@ namespace ClubAtleticoOrt.Controllers
         // GET: Usuario
         public async Task<IActionResult> Index()
         {
+            ViewBag.Nombre = HttpContext.Session.GetString("nombre");
             ViewBag.Dni = HttpContext.Session.GetString("dni_usuario");
             return View(await _context.Usuarios.ToListAsync());
         }
@@ -47,7 +48,7 @@ namespace ClubAtleticoOrt.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.Nombre = HttpContext.Session.GetString("nombre");
             return View(usuario);
         }
         #endregion
@@ -118,6 +119,7 @@ namespace ClubAtleticoOrt.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Nombre = HttpContext.Session.GetString("nombre");
             return View(usuario);
         }
 
@@ -163,6 +165,7 @@ namespace ClubAtleticoOrt.Controllers
                     }
                 }
             }
+
             return View(usuario);
         }
         #endregion
@@ -194,6 +197,7 @@ namespace ClubAtleticoOrt.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Nombre = HttpContext.Session.GetString("nombre");
 
             return View(usuario);
         }

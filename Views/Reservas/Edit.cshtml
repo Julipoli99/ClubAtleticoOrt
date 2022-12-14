@@ -95,6 +95,11 @@
         })
     }
 
+    horaInicio.addEventListener("keyup", (e) => {
+
+        horaFin.value = Number(e.target.value) + 1
+    })
+
 </script>
 
 @section Scripts {

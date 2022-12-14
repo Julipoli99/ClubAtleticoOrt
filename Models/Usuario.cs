@@ -53,7 +53,7 @@ namespace ClubAtleticoOrt.Models
         public DateTime FechaInscripto { get; set; }
         
         [Required(ErrorMessage = CAMPO_REQUERIDO), MinLength(6, ErrorMessage = RANGO_DNI), MaxLength(10, ErrorMessage = RANGO_DNI)]
-        [RegularExpression(@"[0-9]{1,9}(\.[0-9]{0,2})?$", ErrorMessage = FORMATO_TELEFONO_INVALIDO)]
+        [RegularExpression(@"[0-9]{6,10}", ErrorMessage = FORMATO_TELEFONO_INVALIDO)]
         public string Telefono { get; set; }
     }
 }
