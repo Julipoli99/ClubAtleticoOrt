@@ -19,7 +19,12 @@ h1{
 .contenedor {
     width: 100%;
     padding: 15px;
-    margin-bottom: 50px
+    margin-bottom: 50px;
+}
+
+main {
+    background-color: black;
+    opacity:0.5;
 }
 
 .contenedorRegistro {
