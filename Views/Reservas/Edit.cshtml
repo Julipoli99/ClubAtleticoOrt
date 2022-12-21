@@ -3,13 +3,14 @@
 @{
     ViewData["Title"] = "Edit";
 }
+<div class="opacityBg">
 
-<h1>Editar</h1>
+<h1>Editar la reserva</h1>
 
-<h4>Reserva</h4>
+<!--h4>Reserva</h4-->
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="">
+    <div class="">
         <form asp-action="Edit" id="form">
             <div style="color: crimson">@ViewData["Error"]</div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -57,6 +58,7 @@
     <a asp-action="Index" class="btn btn-dark">Regresar</a>
 </div>
 
+</div>
 <script>
     let form = document.getElementById("form");
 

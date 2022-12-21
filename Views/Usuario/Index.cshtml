@@ -3,10 +3,11 @@
 @{
     ViewData["Title"] = "Index";
 }
+<div class="userWp">
 
 <h1>Usuarios</h1>
 
-<p>
+<p class="">
     @if (ViewBag.Dni == null)
     {
         <a asp-action="Create" class="btn btn-secondary">Crear nuevo usuario</a>
@@ -87,3 +88,5 @@
 
     </tbody>
 </table>
+
+</div>

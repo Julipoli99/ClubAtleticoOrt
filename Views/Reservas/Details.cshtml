@@ -4,45 +4,45 @@
     ViewData["Title"] = "Details";
 }
 
+<div class="opacityBg" style="margin:auto;">
 <h1>Detalles</h1>
 
-<div>
-    <h4>Reserva</h4>
+    <!-- h4>Reserva</h4 -->
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
+    <dl class="">
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.Fecha)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Fecha)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.HoraInicio)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.HoraInicio)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.HoraFin)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.HoraFin)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.Nro_cancha)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Nro_cancha)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.Nro_Dni)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Nro_Dni)
         </dd>
     </dl>
-</div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a> |
     <a asp-action="Index" class="btn btn-dark">Regresar</a>
+</div>
 </div>

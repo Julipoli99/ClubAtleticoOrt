@@ -6,47 +6,58 @@
     <title>@ViewData["Title"] - ClubAtleticoOrt</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/StyleSheet.css"  />
+    <link rel="stylesheet" href="~/css/StyleSheet.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ClubAtleticoOrt</a>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/football-club.png" height="50" width="50" class="d-inline-block align-self-center"/>
+                    
+                    <span class="brand-text">
+                        Club Atlético Ort
+
+                    </span>
+                    
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse nav-wp">
+                    <ul class="navbar-nav flex-grow-1 nav-bar">
+                        <!-- li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li -->
+
+                        <li class="nav-item">
+                            <a class="nav-link text-light header-a" asp-area="" asp-controller="Reservas" asp-action="Index">Reservar</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Reservas" asp-action="Index">Reservar</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Usuarios</a>
+                            <a class="nav-link text-light header-a" asp-area="" asp-controller="Usuario" asp-action="Index">Usuarios</a>
                         </li>
 
                         @if (ViewBag.Nombre == null)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Acceso" asp-action="Login">Login</a>
+                                <a class="nav-link text-light header-a" asp-area="" asp-controller="Acceso" asp-action="Login">Login</a>
                             </li>
 
                         }
                         else
                         {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Acceso" asp-action="CerrarSesion">Cerrar Sesion</a>
+                            <a class="nav-link text-light header-a" asp-area="" asp-controller="Acceso" asp-action="CerrarSesion">Cerrar Sesion</a>
                         </li>
                         }
 
@@ -55,15 +66,15 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3 opacityBg">
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - ClubAtleticoOrt - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - ClubAtleticoOrt
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
